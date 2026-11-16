@@ -1,7 +1,7 @@
-﻿# Day 01 – Daily Work Log
+# Day 01 – Daily Work Log
 
-**Project:** Service Request Management System  
-**Date:** 16 November 2026  
+**Project:** Service Request Management System
+**Date:** 16 November 2026
 **Task:** Requirements Analysis and Project Setup
 
 ## 1. Objectives
@@ -23,43 +23,61 @@
 - Documented the request status workflow.
 - Created the project README.md and .gitignore files.
 - Initialized the Git repository and created the feature branch.
+- Created the Day 01 evidence folder and daily work log.
+- Captured six screenshots documenting the requirements, user stories, product backlog, pull request, and Git history.
+- Committed and pushed the Day 01 evidence to the feature branch.
 
 ## 3. Files Created
 - README.md
 - .gitignore
 - docs/requirements.md
+- evidence/Day-01/Daily-Work-Log.md
+- evidence/Day-01/screenshots/01-problem-statement.png
+- evidence/Day-01/screenshots/02-functional-requirements.png
+- evidence/Day-01/screenshots/03-user-stories.png
+- evidence/Day-01/screenshots/04-product-backlog.png
+- evidence/Day-01/screenshots/05-pull-request.png
+- evidence/Day-01/screenshots/06-git-history.png
 
 ## 4. Git Activities
 **Feature Branch:** docs/day-01-requirements
 
-**Initial Commit:** 1a9f0b7  
-**Commit Message:** docs: define project requirements and MVP scope
+**Initial Commit:** 1a9f0b7
+**Initial Commit Message:** docs: define project requirements and MVP scope
 
-**Latest Commit:** 967178a
+**Merge Commit:** 967178a
+
+**Evidence Commit:** 2c4b792
+**Evidence Commit Message:** docs: add Day 01 work log and evidence
 
 **Pull Request:** #1 – Day 01: Project Requirements and MVP Scope
 
-**Pull Request URL:**  
+**Pull Request URL:**
 https://github.com/SilvaDeShakila/VisionRoot-Software-Engineering-Training/pull/1
 
-**Pull Request Status:** Open
+**Pull Request Status:** Open – awaiting review
 
 ## 5. Challenges and Resolutions
 - Encountered unrelated Git histories between the main and feature branches.
 - Connected the branch histories using a merge with unrelated histories.
 - Successfully pushed the updated feature branch to GitHub.
 - Created the Day 01 pull request successfully.
+- Organized and committed the supporting screenshots and daily work log.
 
 ## 6. Testing and Verification
-- Verified that the Git working tree was clean before the history merge.
 - Verified that the feature branch was pushed successfully.
-- Verified that the pull request was created and has no merge conflicts.
+- Verified that the pull request was created and had no merge conflicts at the time of checking.
+- Verified that all six evidence screenshots were present in the evidence folder.
+- Verified that the evidence commit was pushed successfully.
+- Verified that the Git working tree was clean after the evidence commit.
 - Application implementation and application testing have not yet been performed as part of this documentation task.
 
 ## 7. Pending Items
-- Capture screenshots of the requirements documentation and GitHub pull request.
-- Confirm the request status transition rules with the supervisor before implementation.
-- Complete the evidence package and verify it against the onboarding instructions.
+- Obtain supervisor confirmation of the request status transition rules before implementation.
+- Await supervisor/reviewer feedback and approval on Pull Request #1.
+- Address any review comments or requested changes if received.
 
 ## 8. Current Progress
-Day 01 requirements documentation and GitHub pull request preparation have been completed. Evidence collection and final verification are pending.
+Day 01 requirements documentation, repository setup, pull request creation, screenshot collection, and evidence submission have been completed.
+
+The Day 01 pull request remains open for review. Supervisor confirmation of the request status transition rules is still required before implementing the status workflow.
