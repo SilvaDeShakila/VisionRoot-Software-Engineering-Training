@@ -64,8 +64,8 @@ The following decisions require clarification or confirmation before implementat
 ## 8. GitHub Progress
 
 - Working branch: `docs/day-02-architecture-design`
-- Day 02 documentation commit: pending.
-- Day 02 pull request: pending.
+- Day 02 documentation commit: 319a32 (committed and pushed).
+- Day 02 pull request: creation in progress.
 - Supervisor review and approval: pending.
 
 ## 9. Next Steps

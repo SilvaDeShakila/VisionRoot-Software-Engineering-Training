@@ -1,4 +1,4 @@
-# System Architecture Ã¢â‚¬â€œ Service Request Management System
+# System Architecture - Service Request Management System
 
 ## 1. Overview
 
