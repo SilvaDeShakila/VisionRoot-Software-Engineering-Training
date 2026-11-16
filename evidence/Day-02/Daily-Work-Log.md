@@ -59,17 +59,17 @@ The following decisions require clarification or confirmation before implementat
 ## 7. Evidence
 
 - Documentation files are available in the `docs/` directory.
-- Screenshots of the completed Day 02 work: pending capture.
+- Captured 20 genuine screenshots covering the architecture diagrams, data model, API contract, and ADR-001.
 
 ## 8. GitHub Progress
 
 - Working branch: `docs/day-02-architecture-design`
 - Day 02 documentation commit: `0319a32` (committed and pushed).
-- Day 02 pull request: creation in progress.
+- Day 02 evidence screenshots commit: `3d3de5a` (20 screenshots committed and pushed).
+- Day 02 pull request: [PR #2](https://github.com/SilvaDeShakila/VisionRoot-Software-Engineering-Training/pull/2) (Open; awaiting supervisor review).
 - Supervisor review and approval: pending.
 
 ## 9. Next Steps
 
-- Capture genuine screenshots of the completed work.
-- Prepare the Day 02 pull request using the appropriate base branch.
-- Obtain supervisor clarification on the pending decisions.
+- Monitor PR #2 for supervisor review and feedback.
+- Obtain supervisor clarification on the pending decisions before implementation.
