@@ -3,9 +3,9 @@
 
 ## 1. Overview
 
-This document describes the proposed database structure for the Service Request Management System.
+This document describes the database structure implemented for the Service Request Management System.
 
-The system will use PostgreSQL as its relational database. The initial MVP data model focuses on storing service requests and supporting the required operations.
+The system uses PostgreSQL as its relational database. The implemented MVP schema focuses on storing service requests and supporting the required operations.
 
 ## 2. Entity Overview
 
@@ -114,13 +114,18 @@ Database CHECK constraint:
 
 ### 5.6 Proposed Database Length Constraints
 
-The proposed title and description length limits can also be enforced through database CHECK constraints:
+The following length limits are proposed validation rules:
 
-- Title: `CHECK (char_length(btrim(title)) BETWEEN 3 AND 150)`
-- Description: `CHECK (char_length(btrim(description)) BETWEEN 10 AND 5000)`
+- Title: 3 to 150 characters.
+- Description: 10 to 5,000 characters.
 
-These proposed limits must be reviewed before implementation.
+**Current database implementation:**
 
+- The `title` column uses `VARCHAR(150)`, enforcing a maximum length of 150 characters.
+- The `description` column uses `TEXT` without a database CHECK constraint for minimum or maximum length.
+- The proposed minimum title length and description length limits are not currently enforced by database constraints.
+
+These limits should be reviewed and implemented consistently through backend validation and database constraints where appropriate.
 ## 6. Timestamp Management
 
 ### created_at
@@ -132,8 +137,8 @@ These proposed limits must be reviewed before implementation.
 ### updated_at
 
 - Records the latest update time.
-- Must be updated when a service request is modified.
-- The backend update operation will set it using the database current timestamp.
+- The PostgreSQL repository update operation sets it using `CURRENT_TIMESTAMP`.
+- The API endpoint for updating service requests remains pending.
 - The client must not directly control this value.
 
 Both fields will use the PostgreSQL TIMESTAMPTZ type to retain timezone-aware timestamps.
@@ -199,8 +204,8 @@ These items must be reviewed before implementing functionality that depends on t
 
 ## 11. Summary
 
-The proposed MVP data model uses PostgreSQL and a ServiceRequest entity with a UUID primary key.
+The implemented MVP database schema uses PostgreSQL and a service_requests table with a UUID primary key.
 
-It defines the required request information, supported category, priority and status values, timestamps and data integrity constraints.
+The schema defines the service request fields, supported category, priority and status values, timestamps, database constraints and indexes.
 
 The model provides a foundation for implementing the service request management features while keeping unresolved requirements clearly documented.

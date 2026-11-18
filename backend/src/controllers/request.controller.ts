@@ -1,12 +1,13 @@
-﻿import type { RequestHandler } from "express";
+import type { RequestHandler } from "express";
 import { RequestService } from "../services/request.service";
-import { InMemoryRequestRepository } from "../repositories/in-memory-request.repository";
+import { pool } from "../config/database";
+import { PostgresRequestRepository } from "../repositories/postgres-request.repository";
 import {
   requestIdSchema,
   requestStatusSchema,
 } from "../validators/request.validator";
 
-const repository = new InMemoryRequestRepository();
+const repository = new PostgresRequestRepository(pool);
 const requestService = new RequestService(repository);
 
 export const getAllRequests: RequestHandler = async (req, res) => {

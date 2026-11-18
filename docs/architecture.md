@@ -1,10 +1,10 @@
-# System Architecture - Service Request Management System
+﻿# System Architecture - Service Request Management System
 
 ## 1. Overview
 
-The Service Request Management System will use a Modular Monolith architecture.
+The Service Request Management System uses a Modular Monolith architecture.
 
-The application will consist of a Next.js frontend, an Express.js backend, and a PostgreSQL database. The frontend and backend will communicate through HTTP REST APIs.
+The application consists of a Next.js frontend, an Express.js backend, and a PostgreSQL database. The backend uses PostgreSQL for persistent data storage. The frontend and backend are designed to communicate through HTTP REST APIs; frontend-backend integration remains pending.
 
 The backend will be organized into clear layers to maintain separation of concerns and make the application easier to maintain and test.
 
@@ -12,9 +12,9 @@ The backend will be organized into clear layers to maintain separation of concer
 
 **Selected Architecture:** Modular Monolith
 
-The system will be developed as a single backend application with logically separated modules and responsibilities.
+The system is structured as a single backend application with logically separated modules and responsibilities.
 
-The architecture will follow these principles:
+The architecture follows these principles:
 
 - Separation of concerns
 - High cohesion
@@ -98,16 +98,18 @@ Responsibilities:
 - Handle errors consistently.
 - Provide the application health endpoint.
 
-The backend will follow a layered structure:
+The backend follows a layered structure:
 
 | Layer | Responsibility |
 |---|---|
 | Routes | Define API endpoints and connect them to controllers. |
 | Controllers | Handle HTTP requests and responses. |
 | Services | Implement business rules and coordinate operations. |
-| Domain / Models | Represent business concepts and relevant rules. |
-| Repositories | Handle database queries and persistence. |
-| Middleware | Handle cross-cutting concerns such as validation and error handling. |
+| Repositories | Define data access contracts and handle database queries and persistence. |
+| Types | Define TypeScript types for service request data. |
+| Validators | Validate incoming request data using defined schemas. |
+| Middleware | Handle cross-cutting concerns such as request validation and error handling. |
+| Configuration | Manage environment variables and PostgreSQL connection settings. |
 
 ### 4.3 Database Container
 
@@ -173,18 +175,21 @@ The exact permitted status transition rules require supervisor confirmation befo
 
 ## 6. API Communication
 
-The frontend and backend will communicate through HTTP REST APIs.
+The backend exposes HTTP REST APIs for communication with the frontend. Frontend-backend integration remains pending.
 
-The API will support the following main operations:
+The following backend API operations are currently implemented:
 
 - Create service requests.
 - Retrieve all service requests.
 - Filter service requests by status.
 - Retrieve an individual service request.
-- Update a service request status.
 - Check backend health.
 
-The detailed endpoints, request payloads and response structures will be documented separately in `docs/api-contract.md`.
+The following operation is planned but has not yet been implemented:
+
+- Update a service request status. The endpoint and permitted status transitions require supervisor confirmation.
+
+The detailed endpoints, request payloads and response structures are documented in `docs/api-contract.md`.
 
 ## 7. Architecture Trade-off
 

@@ -2,9 +2,9 @@
 
 ## 1. Overview
 
-This document defines the proposed REST API contract for the Service Request Management System.
+This document describes the REST API contract for the Service Request Management System, including implemented endpoints and endpoints pending implementation.
 
-The backend will be developed using Express.js and TypeScript. The API will communicate with the frontend through HTTP requests and JSON responses.
+The backend is implemented using Express.js and TypeScript. The API exposes HTTP endpoints that exchange JSON data. PostgreSQL is used for persistent service request storage.
 
 ### 1.1 Base Path
 
@@ -247,7 +247,7 @@ Status: `200 OK`
 | 200 OK | The API process responds successfully |
 | 500 Internal Server Error | Unexpected server error |
 
-Database readiness checks and dependency health checks remain pending until the database integration requirements are confirmed and implemented.
+The backend verifies the PostgreSQL connection during startup before accepting requests. However, the health endpoint does not currently report database readiness or dependency health. An enhanced health check remains a possible future improvement.
 
 ## 4. Standard Error Response
 
@@ -312,7 +312,7 @@ The backend must validate:
 
 ## 6. Assumptions and Pending Confirmations
 
-The following items must be reviewed before implementation:
+The following items remain pending confirmation and may affect future implementation:
 
 1. Whether authentication is included in the MVP.
 2. Whether role-based authorization is required.
@@ -326,13 +326,13 @@ Implemented behavior is identified in Section 8. Proposed and pending functional
 
 ## 7. Summary
 
-This document defines the proposed REST API contract for the Service Request Management System.
+This document describes the REST API contract for the Service Request Management System, including implemented endpoints and endpoints pending implementation.
 
 It covers implemented request creation, request listing and filtering, request details, the proposed status-update endpoint and the currently implemented basic health check.
 
 The contract provides example JSON payloads, expected HTTP status codes, validation responsibilities and a consistent error response structure.
 
-Unconfirmed requirements are documented separately so they can be reviewed before implementation.
+Unconfirmed requirements are documented separately for supervisor review and future implementation planning.
 
 ## 8. Implementation Status and Pending Clarifications
 
@@ -350,9 +350,19 @@ The following backend functionality has been implemented and manually tested:
 - Handle unexpected application errors through global error middleware.
 - Provide a basic application health endpoint.
 
-**Current persistence limitation:**
+**Current persistence implementation:**
 
-The backend currently uses an in-memory repository for development and testing. Records are not persistent and will be lost when the server process restarts. PostgreSQL integration is planned for the database implementation phase.
+The backend now uses a PostgreSQL-backed repository for service request persistence.
+
+The PostgreSQL integration has been manually verified through:
+
+- Successful database connection during backend startup.
+- Service request creation and retrieval through the API.
+- Filtering service requests by status.
+- Direct database verification.
+- Successful retrieval of existing records after restarting the backend server.
+
+Database connection settings are managed through environment variables. Actual database credentials remain in the local `backend/.env` file and are excluded from Git.
 
 ### 8.2 Pending Supervisor Clarifications
 

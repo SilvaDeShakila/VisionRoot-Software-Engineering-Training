@@ -1,4 +1,4 @@
-﻿# Service Request Management System
+# Service Request Management System
 
 ## Project Overview
 
@@ -103,7 +103,13 @@ The backend uses the following environment variables:
 - `PORT` - Backend server port (default: 5000).
 - `NODE_ENV` - Application environment.
 - `FRONTEND_URL` - Allowed frontend origin for CORS.
+- `DB_HOST` - PostgreSQL database host.
+- `DB_PORT` - PostgreSQL database port (default: 5432).
+- `DB_NAME` - PostgreSQL database name.
+- `DB_USER` - PostgreSQL database username.
+- `DB_PASSWORD` - PostgreSQL database password.
 
+Actual database credentials must remain in the local `backend/.env` file and must never be committed to Git.
 ### Run the Development Server
 
     npm run dev
@@ -125,7 +131,7 @@ The backend API will be available at `http://localhost:5000`.
 | GET | `/api/requests?status=OPEN` | Filter requests by status |
 | GET | `/api/requests/:id` | Retrieve a request by ID |
 
-**Current limitation:** The backend currently uses temporary in-memory storage. PostgreSQL persistence and the request status update endpoint are planned for subsequent development stages.
+**Current backend status:** The backend uses PostgreSQL for persistent service request storage. Database connectivity, request creation, retrieval, status filtering and persistence after a backend restart have been manually verified. The request status update endpoint remains pending.
 
 ## Current Frontend Implementation
 
@@ -162,6 +168,8 @@ Daily development logs, reports and screenshots are maintained in the `evidence/
 
     VisionRoot-Software-Engineering-Training/
     |-- backend/
+    |   |-- database/
+    |   |   |-- schema.sql
     |   |-- src/
     |   |   |-- config/
     |   |   |-- controllers/
@@ -187,9 +195,13 @@ Daily development logs, reports and screenshots are maintained in the `evidence/
     |   |-- Day-03/
     |   |-- Day-04/
     |   |-- Day-05/
+    |   |   |-- screenshots/
+    |   |   |-- Daily-Work-Log.md
+    |   |   |-- Backend-Architecture-Notes.md
+    |   |-- Day-06/
     |       |-- screenshots/
     |       |-- Daily-Work-Log.md
-    |       |-- Backend-Architecture-Notes.md
+    |       |-- PostgreSQL-Integration-Notes.md
     |-- frontend/
     |   |-- src/
     |   |-- public/
@@ -206,7 +218,7 @@ Daily development logs, reports and screenshots are maintained in the `evidence/
 - [x] Day 03: Development environment verification and repository preparation
 - [x] Day 04: Initial frontend UI implementation and verification
 - [x] Day 05: Initial backend API foundation, validation and error handling
-- [ ] Day 06: PostgreSQL database integration
+- [x] Day 06: PostgreSQL database integration
 - [ ] Frontend and backend integration
 - [ ] Automated testing and final review
 
@@ -218,4 +230,4 @@ The initial frontend dashboard has been implemented and verified through linting
 
 The initial Express.js and TypeScript backend foundation has also been implemented. Request creation, listing, status filtering, request retrieval, validation and centralized error handling are available and have been manually verified. TypeScript validation and the production build have completed successfully.
 
-The backend currently uses temporary in-memory storage. PostgreSQL persistence, the request status update endpoint and frontend-backend integration remain pending.
+The backend now uses PostgreSQL for persistent service request storage. Database connectivity, request creation, retrieval, status filtering and persistence after a backend restart have been manually verified. The request status update endpoint and frontend-backend integration remain pending.
