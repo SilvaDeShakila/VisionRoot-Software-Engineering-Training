@@ -333,6 +333,7 @@ It covers implemented request creation, request listing and filtering, request d
 The contract provides example JSON payloads, expected HTTP status codes, validation responsibilities and a consistent error response structure.
 
 Unconfirmed requirements are documented separately so they can be reviewed before implementation.
+
 ## 8. Implementation Status and Pending Clarifications
 
 ### 8.1 Implemented Backend Functionality
