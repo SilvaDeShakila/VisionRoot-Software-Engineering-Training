@@ -52,27 +52,26 @@ The project uses environment variables for application configuration.
 ## Repository Information
 
 - Repository: https://github.com/SilvaDeShakila/VisionRoot-Software-Engineering-Training
-- Default branch (remote HEAD): `docs/day-01-requirements`
+- Integration branch: `main`
 
 ## Repository Structure
 
 ```text
 VisionRoot-Software-Engineering-Training/
-├── docs/
-│   ├── decisions/
-│   ├── requirements.md
-│   ├── architecture.md
-│   ├── data-model.md
-│   └── api-contract.md
-├── evidence/
-│   ├── Day-01/
-│   ├── Day-02/
-│   └── Day-03/
-├── .env.example
-├── .gitignore
-└── README.md
+|-- docs/
+|   |-- decisions/
+|   |-- requirements.md
+|   |-- architecture.md
+|   |-- data-model.md
+|   `-- api-contract.md
+|-- evidence/
+|   |-- Day-01/
+|   |-- Day-02/
+|   `-- Day-03/
+|-- .env.example
+|-- .gitignore
+`-- README.md
 ```
-
 Application source directories will be introduced during the implementation stages.
 
 ## Development Progress
