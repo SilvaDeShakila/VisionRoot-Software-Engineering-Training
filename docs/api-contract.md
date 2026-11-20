@@ -37,8 +37,8 @@ The API will use the following fields to represent a service request.
 | category | string | IT, Facilities or Other |
 | priority | string | LOW, MEDIUM or HIGH |
 | status | string | OPEN, IN_PROGRESS, RESOLVED or CLOSED |
-| created_at | string | Creation timestamp in ISO 8601 format |
-| updated_at | string | Latest update timestamp in ISO 8601 format |
+| createdAt | string | Creation timestamp in ISO 8601 format |
+| updatedAt | string | Latest update timestamp in ISO 8601 format |
 
 The server/database will generate the identifier, initial status and timestamps when a request is created.
 
@@ -75,8 +75,8 @@ Status: `201 Created`
   "category": "IT",
   "priority": "HIGH",
   "status": "OPEN",
-  "created_at": "2026-11-16T10:30:00Z",
-  "updated_at": "2026-11-16T10:30:00Z"
+  "createdAt": "2026-11-16T10:30:00Z",
+  "updatedAt": "2026-11-16T10:30:00Z"
 }
 ```
 
@@ -116,8 +116,8 @@ Status: `200 OK`
       "category": "IT",
       "priority": "HIGH",
       "status": "OPEN",
-      "created_at": "2026-11-16T10:30:00Z",
-      "updated_at": "2026-11-16T10:30:00Z"
+      "createdAt": "2026-11-16T10:30:00Z",
+      "updatedAt": "2026-11-16T10:30:00Z"
     }
   ]
 }
@@ -155,8 +155,8 @@ Status: `200 OK`
   "category": "IT",
   "priority": "HIGH",
   "status": "OPEN",
-  "created_at": "2026-11-16T10:30:00Z",
-  "updated_at": "2026-11-16T10:30:00Z"
+  "createdAt": "2026-11-16T10:30:00Z",
+  "updatedAt": "2026-11-16T10:30:00Z"
 }
 ```
 
@@ -169,7 +169,7 @@ Status: `200 OK`
 | 404 Not Found | Service request does not exist |
 | 500 Internal Server Error | Unexpected server error |
 
-### 3.4 Update Service Request Status
+### 3.4 Update Service Request Status (Pending Implementation)
 
 **Endpoint:** `PATCH /api/requests/{id}/status`
 
@@ -197,8 +197,8 @@ Status: `200 OK`
   "category": "IT",
   "priority": "HIGH",
   "status": "IN_PROGRESS",
-  "created_at": "2026-11-16T10:30:00Z",
-  "updated_at": "2026-11-16T11:00:00Z"
+  "createdAt": "2026-11-16T10:30:00Z",
+  "updatedAt": "2026-11-16T11:00:00Z"
 }
 ```
 
@@ -220,12 +220,13 @@ The exact transition rules are not defined in this document because they remain 
 
 **Endpoint:** `GET /api/health`
 
-**Purpose:** Check whether the backend application and its required dependencies are operating correctly.
+**Purpose:** Check whether the backend API process is running.
 
-**Proposed Health Criteria:**
+**Currently Implemented Health Check:**
 
-- The backend application is running.
-- The required database connection is available.
+- Confirms that the backend API process responds to the health endpoint.
+- Returns the current server timestamp.
+- Does not currently check PostgreSQL or other external dependencies.
 
 **Successful Response:**
 
@@ -234,7 +235,8 @@ Status: `200 OK`
 ```json
 {
   "status": "healthy",
-  "message": "Service is operating normally."
+  "message": "VisionRoot API is running.",
+  "timestamp": "2026-11-17T13:38:17.489Z"
 }
 ```
 
@@ -242,11 +244,10 @@ Status: `200 OK`
 
 | Status Code | Meaning |
 |---|---|
-| 200 OK | Documented health criteria are satisfied |
-| 503 Service Unavailable | A required dependency is unavailable |
-| 500 Internal Server Error | Unexpected health-check error |
+| 200 OK | The API process responds successfully |
+| 500 Internal Server Error | Unexpected server error |
 
-The exact health-check implementation will be confirmed during backend development.
+Database readiness checks and dependency health checks remain pending until the database integration requirements are confirmed and implemented.
 
 ## 4. Standard Error Response
 
@@ -281,6 +282,7 @@ The `details` field is optional and can provide additional information about val
 | REQUEST_NOT_FOUND | Requested service request does not exist |
 | INTERNAL_SERVER_ERROR | Unexpected server-side error |
 | SERVICE_UNAVAILABLE | A required service or dependency is unavailable |
+| ROUTE_NOT_FOUND | The requested API endpoint does not exist |
 
 The backend must not expose database credentials, internal stack traces or other sensitive implementation details in error responses.
 
@@ -320,14 +322,71 @@ The following items must be reviewed before implementation:
 6. Whether pagination or sorting is required for the request list.
 7. The final health-check criteria.
 
-The response structures, error format and additional HTTP status-code choices in this document are proposed API design decisions and may be adjusted after supervisor review.
+Implemented behavior is identified in Section 8. Proposed and pending functionality remains subject to supervisor review.
 
 ## 7. Summary
 
 This document defines the proposed REST API contract for the Service Request Management System.
 
-It covers request creation, request listing and filtering, request details, status updates and backend health checking.
+It covers implemented request creation, request listing and filtering, request details, the proposed status-update endpoint and the currently implemented basic health check.
 
 The contract provides example JSON payloads, expected HTTP status codes, validation responsibilities and a consistent error response structure.
 
 Unconfirmed requirements are documented separately so they can be reviewed before implementation.
+
+## 8. Implementation Status and Pending Clarifications
+
+### 8.1 Implemented Backend Functionality
+
+The following backend functionality has been implemented and manually tested:
+
+- Create service requests.
+- Retrieve all service requests.
+- Filter service requests by supported status values.
+- Retrieve a service request using its UUID.
+- Validate request input and status query parameters.
+- Return consistent JSON responses for application errors.
+- Handle unknown API routes with a standard 404 response.
+- Handle unexpected application errors through global error middleware.
+- Provide a basic application health endpoint.
+
+**Current persistence limitation:**
+
+The backend currently uses an in-memory repository for development and testing. Records are not persistent and will be lost when the server process restarts. PostgreSQL integration is planned for the database implementation phase.
+
+### 8.2 Pending Supervisor Clarifications
+
+| Item | Current Status | Required Action |
+|---|---|---|
+| Authentication | Pending | Confirm whether authentication is required |
+| Authorization | Pending | Confirm whether role-based permissions are required |
+| Status transitions | Pending | Obtain the approved status transition workflow |
+| Additional request fields | Pending | Confirm whether additional fields are required |
+| Title and description limits | Pending | Confirm final validation limits |
+| Pagination and sorting | Pending | Confirm request-list requirements |
+| Health-check criteria | Pending | Confirm required dependency checks |
+
+### 8.3 Status Transition Implementation Note
+
+The supported request statuses are:
+
+- OPEN
+- IN_PROGRESS
+- RESOLVED
+- CLOSED
+
+The permitted transitions between these statuses have not yet been confirmed by the supervisor.
+
+Status transition business logic must not be finalized using assumed workflow rules. Implementation of transition validation will remain pending until the approved workflow is received.
+
+The API contract and implementation must be updated after supervisor confirmation.
+
+### 8.4 Implementation and Documentation Alignment
+
+The documented request timestamp fields use the camelCase names returned by the current backend: `createdAt` and `updatedAt`.
+
+The health-check response documents the currently implemented `status`, `message` and `timestamp` fields. It does not claim to verify database availability.
+
+The status-update endpoint remains a proposed endpoint and has not yet been implemented. Its transition rules require supervisor confirmation.
+
+The API contract must be updated whenever implementation behavior or approved requirements change.
