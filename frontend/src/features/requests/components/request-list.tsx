@@ -1,5 +1,6 @@
-﻿"use client";
+"use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import type { RequestStatus, ServiceRequest } from "../types/request";
 
@@ -68,7 +69,7 @@ export default function RequestList({ requests }: RequestListProps) {
       {filteredRequests.length === 0 ? (
         <div className="px-5 py-16 text-center">
           <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-50 text-2xl text-blue-600">
-            ▤
+            ⌕
           </div>
           <p className="mt-4 text-base font-semibold text-slate-800">
             No requests found
@@ -93,7 +94,12 @@ export default function RequestList({ requests }: RequestListProps) {
               {filteredRequests.map((request) => (
                 <tr key={request.id} className="transition-colors hover:bg-blue-50/40">
                   <td className="px-6 py-4">
-                    <p className="font-semibold text-slate-800">{request.title}</p>
+                    <Link
+                      href={`/requests/${encodeURIComponent(request.id)}`}
+                      className="font-semibold text-blue-700 transition hover:text-blue-900 hover:underline"
+                    >
+                      {request.title}
+                    </Link>
                     <p className="mt-1 max-w-xs truncate text-xs text-slate-500">
                       {request.description}
                     </p>
@@ -112,7 +118,7 @@ export default function RequestList({ requests }: RequestListProps) {
                     </span>
                   </td>
                   <td className="whitespace-nowrap px-5 py-4 text-sm text-slate-500">
-                    {new Date(request.created_at).toLocaleDateString("en-GB", { timeZone: "UTC" })}
+                    {new Date(request.createdAt).toLocaleDateString("en-GB", { timeZone: "UTC" })}
                   </td>
                 </tr>
               ))}

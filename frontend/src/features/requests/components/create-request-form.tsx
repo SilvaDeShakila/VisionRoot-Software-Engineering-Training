@@ -1,10 +1,10 @@
-﻿"use client";
+"use client";
 
 import { useState, type FormEvent } from "react";
 import type { CreateRequestInput } from "../types/request";
 
 interface CreateRequestFormProps {
-  onCreate: (data: CreateRequestInput) => void;
+  onCreate: (data: CreateRequestInput) => Promise<void>;
 }
 
 export default function CreateRequestForm({
@@ -18,9 +18,15 @@ export default function CreateRequestForm({
     useState<CreateRequestInput["priority"]>("MEDIUM");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+
+    if (isSubmitting) {
+      return;
+    }
+
     setError("");
     setSuccess(false);
 
@@ -37,18 +43,30 @@ export default function CreateRequestForm({
       return;
     }
 
-    onCreate({
-      title: trimmedTitle,
-      description: trimmedDescription,
-      category,
-      priority,
-    });
+    setIsSubmitting(true);
 
-    setTitle("");
-    setDescription("");
-    setCategory("IT");
-    setPriority("MEDIUM");
-    setSuccess(true);
+    try {
+      await onCreate({
+        title: trimmedTitle,
+        description: trimmedDescription,
+        category,
+        priority,
+      });
+
+      setTitle("");
+      setDescription("");
+      setCategory("IT");
+      setPriority("MEDIUM");
+      setSuccess(true);
+    } catch (submissionError) {
+      setError(
+        submissionError instanceof Error
+          ? submissionError.message
+          : "Unable to submit the request. Please try again.",
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
@@ -83,8 +101,9 @@ export default function CreateRequestForm({
             onChange={(event) => setTitle(event.target.value)}
             maxLength={150}
             required
+            disabled={isSubmitting}
             placeholder="Enter a short request title"
-            className="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-sm text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-100"
+            className="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-sm text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-100 disabled:cursor-not-allowed disabled:opacity-60"
           />
           <p className="mt-2 text-right text-xs text-slate-400">
             {title.length}/150 characters
@@ -103,9 +122,11 @@ export default function CreateRequestForm({
             value={description}
             onChange={(event) => setDescription(event.target.value)}
             required
+            maxLength={5000}
             rows={4}
+            disabled={isSubmitting}
             placeholder="Describe the issue or service you need..."
-            className="w-full resize-y rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-sm text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-100"
+            className="w-full resize-y rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-sm text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-100 disabled:cursor-not-allowed disabled:opacity-60"
           />
         </div>
 
@@ -120,10 +141,11 @@ export default function CreateRequestForm({
             <select
               id="request-category"
               value={category}
+              disabled={isSubmitting}
               onChange={(event) =>
                 setCategory(event.target.value as CreateRequestInput["category"])
               }
-              className="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-sm text-slate-700 outline-none transition focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-100"
+              className="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-sm text-slate-700 outline-none transition focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-100 disabled:cursor-not-allowed disabled:opacity-60"
             >
               <option value="IT">IT</option>
               <option value="Facilities">Facilities</option>
@@ -141,10 +163,11 @@ export default function CreateRequestForm({
             <select
               id="request-priority"
               value={priority}
+              disabled={isSubmitting}
               onChange={(event) =>
                 setPriority(event.target.value as CreateRequestInput["priority"])
               }
-              className="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-sm text-slate-700 outline-none transition focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-100"
+              className="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-sm text-slate-700 outline-none transition focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-100 disabled:cursor-not-allowed disabled:opacity-60"
             >
               <option value="LOW">Low</option>
               <option value="MEDIUM">Medium</option>
@@ -154,23 +177,30 @@ export default function CreateRequestForm({
         </div>
 
         {error && (
-          <p role="alert" className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm font-medium text-red-700">
+          <p
+            role="alert"
+            className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm font-medium text-red-700"
+          >
             {error}
           </p>
         )}
 
         {success && (
-          <p role="status" className="rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-sm font-medium text-emerald-700">
-            Request added to the current dashboard session.
+          <p
+            role="status"
+            className="rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-sm font-medium text-emerald-700"
+          >
+            Service request created successfully.
           </p>
         )}
 
         <div className="flex justify-end border-t border-slate-100 pt-5">
           <button
             type="submit"
-            className="rounded-xl bg-blue-600 px-7 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 hover:shadow-md focus:outline-none focus:ring-4 focus:ring-blue-200"
+            disabled={isSubmitting}
+            className="rounded-xl bg-blue-600 px-7 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 hover:shadow-md focus:outline-none focus:ring-4 focus:ring-blue-200 disabled:cursor-not-allowed disabled:opacity-60"
           >
-            Submit Request
+            {isSubmitting ? "Submitting..." : "Submit Request"}
           </button>
         </div>
       </form>

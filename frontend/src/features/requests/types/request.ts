@@ -15,8 +15,8 @@ export interface ServiceRequest {
   category: RequestCategory;
   priority: RequestPriority;
   status: RequestStatus;
-  created_at: string;
-  updated_at: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface CreateRequestInput {

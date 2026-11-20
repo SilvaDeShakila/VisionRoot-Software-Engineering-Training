@@ -18,7 +18,7 @@ All application API endpoints will use the following base path:
 - The `Content-Type` header must be `application/json` when sending JSON request bodies.
 - Service request identifiers use UUID values.
 - The backend is responsible for validating client input.
-- Business rules and status transition validation belong in the service layer.
+- Business rules belong in the service layer. Approved status-transition rules will be enforced there after supervisor confirmation.
 - Database operations belong in the repository layer.
 - Responses must use appropriate HTTP status codes.
 - Error responses must follow a consistent structure.
@@ -169,7 +169,7 @@ Status: `200 OK`
 | 404 Not Found | Service request does not exist |
 | 500 Internal Server Error | Unexpected server error |
 
-### 3.4 Update Service Request Status (Pending Implementation)
+### 3.4 Update Service Request Status (Implemented; Workflow Rules Pending)
 
 **Endpoint:** `PATCH /api/requests/{id}/status`
 
@@ -207,14 +207,13 @@ Status: `200 OK`
 | Status Code | Meaning |
 |---|---|
 | 200 OK | Status updated successfully |
-| 400 Bad Request | Invalid status value or request body |
+| 400 Bad Request | Invalid UUID, status value or request body |
 | 404 Not Found | Service request does not exist |
-| 409 Conflict | Requested status transition is not allowed |
 | 500 Internal Server Error | Unexpected server error |
 
-The backend service layer must validate status transitions according to the workflow confirmed by the supervisor.
+The backend currently validates the request UUID and supported status value. Invalid UUIDs and unsupported status values return `400 Bad Request`, while requests for records that do not exist return `404 Not Found`.
 
-The exact transition rules are not defined in this document because they remain pending confirmation.
+Business-level status transition validation has not yet been implemented because the permitted workflow remains pending supervisor confirmation. The approved transition rules must be added to the service layer after confirmation.
 
 ### 3.5 Health Check
 
@@ -278,7 +277,7 @@ The `details` field is optional and can provide additional information about val
 |---|---|
 | VALIDATION_ERROR | One or more input fields are invalid |
 | INVALID_STATUS | Supplied status value is not supported |
-| INVALID_STATUS_TRANSITION | Requested status transition is not allowed |
+| INVALID_STATUS_TRANSITION | Requested status transition is not allowed (proposed; not currently returned) |
 | REQUEST_NOT_FOUND | Requested service request does not exist |
 | INTERNAL_SERVER_ERROR | Unexpected server-side error |
 | SERVICE_UNAVAILABLE | A required service or dependency is unavailable |
@@ -298,7 +297,7 @@ The backend must validate:
 - Supported priority values.
 - Supported status values.
 - UUID format for request identifiers.
-- Allowed status transitions.
+- Approved status transitions (to be enforced after supervisor confirmation).
 
 ### 5.2 Layer Responsibilities
 
@@ -306,7 +305,7 @@ The backend must validate:
 |---|---|
 | Routes | Define API paths and HTTP methods |
 | Controllers | Handle HTTP requests, validate/map input and return responses |
-| Services | Apply business rules and validate status transitions |
+| Services | Apply implemented business rules; enforce approved status transitions after supervisor confirmation |
 | Repositories | Perform database queries and persistence operations |
 | Database | Enforce schema constraints and maintain persistent records |
 
@@ -328,7 +327,7 @@ Implemented behavior is identified in Section 8. Proposed and pending functional
 
 This document describes the REST API contract for the Service Request Management System, including implemented endpoints and endpoints pending implementation.
 
-It covers implemented request creation, request listing and filtering, request details, the proposed status-update endpoint and the currently implemented basic health check.
+It covers implemented request creation, request listing and filtering, request details, the implemented status-update endpoint and the currently implemented basic health check.
 
 The contract provides example JSON payloads, expected HTTP status codes, validation responsibilities and a consistent error response structure.
 
@@ -349,6 +348,8 @@ The following backend functionality has been implemented and manually tested:
 - Handle unknown API routes with a standard 404 response.
 - Handle unexpected application errors through global error middleware.
 - Provide a basic application health endpoint.
+- Update service request statuses through the PATCH endpoint.
+- Persist status updates in PostgreSQL and return the updated request.
 
 **Current persistence implementation:**
 
@@ -397,6 +398,6 @@ The documented request timestamp fields use the camelCase names returned by the 
 
 The health-check response documents the currently implemented `status`, `message` and `timestamp` fields. It does not claim to verify database availability.
 
-The status-update endpoint remains a proposed endpoint and has not yet been implemented. Its transition rules require supervisor confirmation.
+The PATCH status-update endpoint is implemented and has been manually tested. Its business-level transition rules still require supervisor confirmation and subsequent implementation.
 
 The API contract must be updated whenever implementation behavior or approved requirements change.

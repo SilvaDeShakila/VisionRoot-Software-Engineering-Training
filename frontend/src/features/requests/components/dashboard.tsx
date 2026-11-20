@@ -1,8 +1,8 @@
 ﻿"use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { CreateRequestInput, ServiceRequest } from "../types/request";
-import { demoRequests } from "../data/demo-requests";
+import { requestService } from "../services/request-service";
 import Sidebar from "@/components/layout/sidebar";
 import Header from "@/components/layout/header";
 import SummaryCards from "./summary-cards";
@@ -10,20 +10,53 @@ import RequestList from "./request-list";
 import CreateRequestForm from "./create-request-form";
 
 export default function Dashboard() {
-  const [requests, setRequests] = useState<ServiceRequest[]>(demoRequests);
+  const [requests, setRequests] = useState<ServiceRequest[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [loadError, setLoadError] = useState("");
+  const [reloadKey, setReloadKey] = useState(0);
 
-  function handleCreateRequest(data: CreateRequestInput) {
-    const now = new Date().toISOString();
+  useEffect(() => {
+    let isActive = true;
 
-    const newRequest: ServiceRequest = {
-      id: crypto.randomUUID(),
-      ...data,
-      status: "OPEN",
-      created_at: now,
-      updated_at: now,
+    async function loadRequests() {
+      setIsLoading(true);
+      setLoadError("");
+
+      try {
+        const response = await requestService.getAll();
+
+        if (isActive) {
+          setRequests(response.data);
+        }
+      } catch (error) {
+        if (isActive) {
+          setLoadError(
+            error instanceof Error
+              ? error.message
+              : "Unable to load service requests.",
+          );
+        }
+      } finally {
+        if (isActive) {
+          setIsLoading(false);
+        }
+      }
+    }
+
+    loadRequests();
+
+    return () => {
+      isActive = false;
     };
+  }, [reloadKey]);
 
-    setRequests((currentRequests) => [newRequest, ...currentRequests]);
+  async function handleCreateRequest(data: CreateRequestInput): Promise<void> {
+    const createdRequest = await requestService.create(data);
+
+    setRequests((currentRequests) => [
+      createdRequest,
+      ...currentRequests,
+    ]);
   }
 
   return (
@@ -58,7 +91,35 @@ export default function Dashboard() {
 
           <SummaryCards requests={requests} />
 
-          <RequestList requests={requests} />
+          {isLoading ? (
+            <section
+              aria-live="polite"
+              className="rounded-2xl border border-slate-200 bg-white px-5 py-16 text-center shadow-sm"
+            >
+              <p className="text-sm font-medium text-slate-600">
+                Loading service requests...
+              </p>
+            </section>
+          ) : loadError ? (
+            <section
+              role="alert"
+              className="rounded-2xl border border-red-200 bg-white px-5 py-10 text-center shadow-sm"
+            >
+              <p className="font-semibold text-red-700">
+                Unable to load service requests
+              </p>
+              <p className="mt-2 text-sm text-slate-600">{loadError}</p>
+              <button
+                type="button"
+                onClick={() => setReloadKey((current) => current + 1)}
+                className="mt-5 rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-200"
+              >
+                Try Again
+              </button>
+            </section>
+          ) : (
+            <RequestList requests={requests} />
+          )}
 
           <CreateRequestForm onCreate={handleCreateRequest} />
 
