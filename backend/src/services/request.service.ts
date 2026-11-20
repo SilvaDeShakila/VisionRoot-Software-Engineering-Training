@@ -1,6 +1,11 @@
-﻿import { randomUUID } from "node:crypto";
-import type { ServiceRequest, RequestStatus } from "../types/request.types";
-import type { CreateRequestInput } from "../validators/request.validator";
+import { randomUUID } from "node:crypto";
+import type {
+  ServiceRequest,
+  RequestStatus,
+} from "../types/request.types";
+import type {
+  CreateRequestInput,
+} from "../validators/request.validator";
 import type { RequestRepository } from "../repositories/request.repository";
 
 export class RequestService {
@@ -34,6 +39,25 @@ export class RequestService {
   async updateRequest(request: ServiceRequest): Promise<ServiceRequest | null> {
     const updatedRequest: ServiceRequest = {
       ...request,
+      updatedAt: new Date().toISOString(),
+    };
+
+    return this.repository.update(updatedRequest);
+  }
+
+  async updateRequestStatus(
+    id: string,
+    status: RequestStatus,
+  ): Promise<ServiceRequest | null> {
+    const request = await this.repository.findById(id);
+
+    if (!request) {
+      return null;
+    }
+
+    const updatedRequest: ServiceRequest = {
+      ...request,
+      status,
       updatedAt: new Date().toISOString(),
     };
 

@@ -28,8 +28,11 @@ async function apiRequest<T>(
 
   if (!response.ok) {
     const errorBody = await response.json().catch(() => null);
+
     throw new Error(
-      errorBody?.message || `Request failed with status ${response.status}`,
+      errorBody?.error?.message ||
+        errorBody?.message ||
+        `Request failed with status ${response.status}`,
     );
   }
 

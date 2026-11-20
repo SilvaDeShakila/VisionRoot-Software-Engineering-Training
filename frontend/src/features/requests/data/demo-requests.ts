@@ -1,4 +1,4 @@
-﻿import type { ServiceRequest } from "../types/request";
+import type { ServiceRequest } from "../types/request";
 
 export const demoRequests: ServiceRequest[] = [
   {
@@ -8,8 +8,8 @@ export const demoRequests: ServiceRequest[] = [
     category: "IT",
     priority: "HIGH",
     status: "OPEN",
-    created_at: "2026-11-15T08:30:00.000Z",
-    updated_at: "2026-11-15T08:30:00.000Z",
+    createdAt: "2026-11-15T08:30:00.000Z",
+    updatedAt: "2026-11-15T08:30:00.000Z",
   },
   {
     id: "550e8400-e29b-41d4-a716-446655440002",
@@ -18,8 +18,8 @@ export const demoRequests: ServiceRequest[] = [
     category: "IT",
     priority: "MEDIUM",
     status: "IN_PROGRESS",
-    created_at: "2026-11-14T09:15:00.000Z",
-    updated_at: "2026-11-15T10:00:00.000Z",
+    createdAt: "2026-11-14T09:15:00.000Z",
+    updatedAt: "2026-11-15T10:00:00.000Z",
   },
   {
     id: "550e8400-e29b-41d4-a716-446655440003",
@@ -28,8 +28,8 @@ export const demoRequests: ServiceRequest[] = [
     category: "Facilities",
     priority: "LOW",
     status: "RESOLVED",
-    created_at: "2026-11-12T11:00:00.000Z",
-    updated_at: "2026-11-14T14:30:00.000Z",
+    createdAt: "2026-11-12T11:00:00.000Z",
+    updatedAt: "2026-11-14T14:30:00.000Z",
   },
   {
     id: "550e8400-e29b-41d4-a716-446655440004",
@@ -38,7 +38,7 @@ export const demoRequests: ServiceRequest[] = [
     category: "Other",
     priority: "MEDIUM",
     status: "CLOSED",
-    created_at: "2026-11-10T07:45:00.000Z",
-    updated_at: "2026-11-13T12:00:00.000Z",
+    createdAt: "2026-11-10T07:45:00.000Z",
+    updatedAt: "2026-11-13T12:00:00.000Z",
   },
 ];

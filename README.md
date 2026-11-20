@@ -65,7 +65,7 @@ Run these commands from the project root:
 
 The example frontend environment file is available at `frontend/.env.example`.
 
-The API URL can be configured in `frontend/.env.local` when backend integration is introduced.
+The API URL is configured in `frontend/.env.local` to connect the frontend to the backend API.
 
 ### Run the Development Server
 
@@ -130,8 +130,9 @@ The backend API will be available at `http://localhost:5000`.
 | GET | `/api/requests` | Retrieve all service requests |
 | GET | `/api/requests?status=OPEN` | Filter requests by status |
 | GET | `/api/requests/:id` | Retrieve a request by ID |
+| PATCH | `/api/requests/:id/status` | Update a request status |
 
-**Current backend status:** The backend uses PostgreSQL for persistent service request storage. Database connectivity, request creation, retrieval, status filtering and persistence after a backend restart have been manually verified. The request status update endpoint remains pending.
+**Current backend status:** The backend uses PostgreSQL for persistent service request storage. Request creation, retrieval, status filtering and status updates are implemented. Request status updates are validated and manually verified. Business-level status transition rules remain subject to supervisor confirmation.
 
 ## Current Frontend Implementation
 
@@ -140,12 +141,14 @@ The backend API will be available at `http://localhost:5000`.
 - Status filtering
 - Create request form
 - Required-field validation
-- Client-side request submission
+- Backend API integration for request submission and retrieval
+- Request details page with status update functionality
+- Loading, error, retry and success feedback
 - Desktop sidebar navigation
 - Mobile slide-in navigation drawer
 - Responsive layout styling
 
-The frontend currently uses local demo data and React component state. Backend API integration and PostgreSQL persistence have not yet been completed.
+The frontend retrieves and creates service requests through the backend API and displays request details, status information and API error states. PostgreSQL persistence is provided through the backend.
 
 ## Documentation
 
@@ -199,9 +202,14 @@ Daily development logs, reports and screenshots are maintained in the `evidence/
     |   |   |-- Daily-Work-Log.md
     |   |   |-- Backend-Architecture-Notes.md
     |   |-- Day-06/
-    |       |-- screenshots/
-    |       |-- Daily-Work-Log.md
-    |       |-- PostgreSQL-Integration-Notes.md
+    |   |   |-- screenshots/
+    |   |   |-- Daily-Work-Log.md
+    |   |   |-- PostgreSQL-Integration-Notes.md
+    |   |-- Day-07/
+    |   |   |-- screenshots/
+    |   |   |-- Daily-Work-Log.md
+    |   |   |-- Frontend-Backend-Integration-Notes.md
+    |   |   |-- Status-Update-Implementation-Addendum.md
     |-- frontend/
     |   |-- src/
     |   |-- public/
@@ -219,8 +227,9 @@ Daily development logs, reports and screenshots are maintained in the `evidence/
 - [x] Day 04: Initial frontend UI implementation and verification
 - [x] Day 05: Initial backend API foundation, validation and error handling
 - [x] Day 06: PostgreSQL database integration
-- [ ] Frontend and backend integration
-- [ ] Automated testing and final review
+- [x] Day 07: Frontend and backend integration with manual verification
+- [ ] Day 08: Automated testing and regression verification
+- [ ] Final review and remaining supervisor-confirmed business rules
 
 ## Project Status
 
@@ -230,4 +239,4 @@ The initial frontend dashboard has been implemented and verified through linting
 
 The initial Express.js and TypeScript backend foundation has also been implemented. Request creation, listing, status filtering, request retrieval, validation and centralized error handling are available and have been manually verified. TypeScript validation and the production build have completed successfully.
 
-The backend now uses PostgreSQL for persistent service request storage. Database connectivity, request creation, retrieval, status filtering and persistence after a backend restart have been manually verified. The request status update endpoint and frontend-backend integration remain pending.
+The backend uses PostgreSQL for persistent service request storage. Request creation, retrieval, status filtering and status updates have been manually verified. The frontend is integrated with the backend API, including request creation, listing, details retrieval, status updates and error handling. Backend and frontend type checks, linting where applicable, and production builds have completed successfully. Automated tests and supervisor confirmation of permitted status transitions remain outstanding.

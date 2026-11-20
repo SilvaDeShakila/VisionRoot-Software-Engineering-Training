@@ -74,3 +74,34 @@ export const createRequest: RequestHandler = async (req, res) => {
 
   res.status(201).json(request);
 };
+
+export const updateRequestStatus: RequestHandler = async (req, res) => {
+  const requestId = requestIdSchema.safeParse(req.params.id);
+
+  if (!requestId.success) {
+    res.status(400).json({
+      error: {
+        code: "VALIDATION_ERROR",
+        message: "Invalid request ID format.",
+      },
+    });
+    return;
+  }
+
+  const updatedRequest = await requestService.updateRequestStatus(
+    requestId.data,
+    req.body.status,
+  );
+
+  if (!updatedRequest) {
+    res.status(404).json({
+      error: {
+        code: "REQUEST_NOT_FOUND",
+        message: "Service request not found.",
+      },
+    });
+    return;
+  }
+
+  res.status(200).json(updatedRequest);
+};
