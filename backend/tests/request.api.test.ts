@@ -164,3 +164,38 @@ test("Malformed JSON request bodies return HTTP 400", async () => {
   assert.equal(body.error.code, "VALIDATION_ERROR");
   assert.equal(body.error.message, "Invalid JSON request body.");
 });
+
+const missingRequestId = "00000000-0000-4000-8000-000000000002";
+
+test("GET request with a valid but non-existent UUID returns HTTP 404", async () => {
+  const response = await fetch(
+    `${baseUrl}/api/requests/${missingRequestId}`,
+  );
+
+  assert.equal(response.status, 404);
+
+  const body = await response.json();
+
+  assert.equal(body.error.code, "REQUEST_NOT_FOUND");
+  assert.equal(body.error.message, "Service request not found.");
+});
+
+test("PATCH request with a valid but non-existent UUID returns HTTP 404", async () => {
+  const response = await fetch(
+    `${baseUrl}/api/requests/${missingRequestId}/status`,
+    {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ status: "IN_PROGRESS" }),
+    },
+  );
+
+  assert.equal(response.status, 404);
+
+  const body = await response.json();
+
+  assert.equal(body.error.code, "REQUEST_NOT_FOUND");
+  assert.equal(body.error.message, "Service request not found.");
+});
