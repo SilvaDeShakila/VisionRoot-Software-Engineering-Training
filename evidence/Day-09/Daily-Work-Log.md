@@ -126,7 +126,7 @@ The health endpoint confirms API availability but does not independently query t
 
 **Base commit:** `5e964f1` - Complete Day 08 backend testing and validation
 
-**Commit:** Pending final review.
+**Commit:** Created successfully in commit `5a9ef2b` - Complete Day 09 security and deployment documentation.
 
 **Pull request:** Not created yet.
 
