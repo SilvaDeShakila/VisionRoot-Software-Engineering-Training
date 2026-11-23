@@ -2,10 +2,7 @@ import type { RequestHandler } from "express";
 import { RequestService } from "../services/request.service";
 import { pool } from "../config/database";
 import { PostgresRequestRepository } from "../repositories/postgres-request.repository";
-import {
-  requestIdSchema,
-  requestStatusSchema,
-} from "../validators/request.validator";
+import { requestStatusSchema } from "../validators/request.validator";
 
 const repository = new PostgresRequestRepository(pool);
 const requestService = new RequestService(repository);
@@ -41,20 +38,8 @@ export const getAllRequests: RequestHandler = async (req, res) => {
   });
 };
 
-export const getRequestById: RequestHandler = async (req, res) => {
-  const requestId = requestIdSchema.safeParse(req.params.id);
-
-  if (!requestId.success) {
-    res.status(400).json({
-      error: {
-        code: "VALIDATION_ERROR",
-        message: "Invalid request ID format.",
-      },
-    });
-    return;
-  }
-
-  const request = await requestService.getRequestById(requestId.data);
+export const getRequestById: RequestHandler<{ id: string }> = async (req, res) => {
+  const request = await requestService.getRequestById(req.params.id);
 
   if (!request) {
     res.status(404).json({
@@ -75,21 +60,9 @@ export const createRequest: RequestHandler = async (req, res) => {
   res.status(201).json(request);
 };
 
-export const updateRequestStatus: RequestHandler = async (req, res) => {
-  const requestId = requestIdSchema.safeParse(req.params.id);
-
-  if (!requestId.success) {
-    res.status(400).json({
-      error: {
-        code: "VALIDATION_ERROR",
-        message: "Invalid request ID format.",
-      },
-    });
-    return;
-  }
-
+export const updateRequestStatus: RequestHandler<{ id: string }> = async (req, res) => {
   const updatedRequest = await requestService.updateRequestStatus(
-    requestId.data,
+    req.params.id,
     req.body.status,
   );
 

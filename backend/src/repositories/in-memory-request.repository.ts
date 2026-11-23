@@ -1,15 +1,17 @@
-﻿import type { ServiceRequest, RequestStatus } from "../types/request.types";
+import type { ServiceRequest, RequestStatus } from "../types/request.types";
 import type { RequestRepository } from "./request.repository";
 
 export class InMemoryRequestRepository implements RequestRepository {
   private requests: ServiceRequest[] = [];
 
   async findAll(status?: RequestStatus): Promise<ServiceRequest[]> {
-    if (!status) {
-      return [...this.requests];
-    }
+    const matchingRequests = status
+      ? this.requests.filter((request) => request.status === status)
+      : this.requests;
 
-    return this.requests.filter((request) => request.status === status);
+    return [...matchingRequests].sort(
+      (a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt),
+    );
   }
 
   async findById(id: string): Promise<ServiceRequest | null> {

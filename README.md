@@ -182,6 +182,7 @@ Daily development logs, reports and screenshots are maintained in the `evidence/
     |   |   |-- services/
     |   |   |-- types/
     |   |   |-- validators/
+    |   |-- tests/
     |   |-- .env.example
     |   |-- package.json
     |   |-- package-lock.json
@@ -210,6 +211,12 @@ Daily development logs, reports and screenshots are maintained in the `evidence/
     |   |   |-- Daily-Work-Log.md
     |   |   |-- Frontend-Backend-Integration-Notes.md
     |   |   |-- Status-Update-Implementation-Addendum.md
+    |   |-- Day-08/
+    |   |   |-- Daily-Work-Log.md
+    |   |   |-- Automated-Test-Results.md
+    |   |   |-- PostgreSQL-Manual-Integration-Verification.md
+    |   |   |-- bug-log.md
+    |   |   |-- test-output.txt
     |-- frontend/
     |   |-- src/
     |   |-- public/
@@ -228,7 +235,7 @@ Daily development logs, reports and screenshots are maintained in the `evidence/
 - [x] Day 05: Initial backend API foundation, validation and error handling
 - [x] Day 06: PostgreSQL database integration
 - [x] Day 07: Frontend and backend integration with manual verification
-- [ ] Day 08: Automated testing and regression verification
+- [ ] Day 08: 34 automated tests passed and manual PostgreSQL-backed API verification completed; automated PostgreSQL integration, browser E2E and regression testing remain pending
 - [ ] Final review and remaining supervisor-confirmed business rules
 
 ## Project Status
@@ -239,4 +246,4 @@ The initial frontend dashboard has been implemented and verified through linting
 
 The initial Express.js and TypeScript backend foundation has also been implemented. Request creation, listing, status filtering, request retrieval, validation and centralized error handling are available and have been manually verified. TypeScript validation and the production build have completed successfully.
 
-The backend uses PostgreSQL for persistent service request storage. Request creation, retrieval, status filtering and status updates have been manually verified. The frontend is integrated with the backend API, including request creation, listing, details retrieval, status updates and error handling. Backend and frontend type checks, linting where applicable, and production builds have completed successfully. Automated tests and supervisor confirmation of permitted status transitions remain outstanding.
+The backend uses PostgreSQL for persistent service request storage. Request creation, retrieval, status filtering and status updates have been manually verified. The frontend is integrated with the backend API, including request creation, listing, details retrieval, status updates and error handling. A total of 34 automated backend tests have passed: 10 service tests, 15 validation tests and 9 HTTP API tests. Backend type checking and production build verification, frontend linting and frontend production build verification have also passed. The current HTTP API tests cover the API root and health endpoints, not-found handling, and invalid input/error responses. Manual PostgreSQL-backed API flows have been successfully verified and documented. Automated PostgreSQL integration tests, browser end-to-end tests, a regression test linked to a confirmed and fixed defect, and supervisor confirmation of permitted status transitions remain outstanding.

@@ -5,9 +5,13 @@ import {
   getRequestById,
   updateRequestStatus,
 } from "../controllers/request.controller";
-import { validateBody } from "../middlewares/validate.middleware";
+import {
+  validateBody,
+  validateParam,
+} from "../middlewares/validate.middleware";
 import {
   createRequestSchema,
+  requestIdSchema,
   updateStatusSchema,
 } from "../validators/request.validator";
 
@@ -15,7 +19,11 @@ const requestRouter = Router();
 
 requestRouter.get("/", getAllRequests);
 
-requestRouter.get("/:id", getRequestById);
+requestRouter.get(
+  "/:id",
+  validateParam("id", requestIdSchema, "Invalid request ID format."),
+  getRequestById,
+);
 
 requestRouter.post(
   "/",
@@ -25,6 +33,7 @@ requestRouter.post(
 
 requestRouter.patch(
   "/:id/status",
+  validateParam("id", requestIdSchema, "Invalid request ID format."),
   validateBody(updateStatusSchema),
   updateRequestStatus,
 );
