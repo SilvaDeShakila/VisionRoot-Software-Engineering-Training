@@ -1,4 +1,4 @@
-﻿# Deployment and Local Setup Guide
+# Deployment and Local Setup Guide
 
 ## 1. Overview
 
@@ -184,6 +184,14 @@ The health endpoint verifies API availability. It does not independently verify 
 - Review authentication and authorization requirements with the supervisor before deployment.
 - Do not deploy publicly without supervisor approval.
 
+### HTTPS
+
+- Use HTTPS for public or production deployments.
+- Configure TLS through the approved hosting platform or a trusted reverse proxy.
+- Do not transmit credentials or sensitive application data over unencrypted public HTTP.
+- Local development may use HTTP on localhost; this is not a production security configuration.
+- Verify HTTPS certificates and the approved deployment configuration before going live.
+
 ## 10. Operational Notes
 
 The backend performs a PostgreSQL connectivity check during startup.
@@ -191,6 +199,15 @@ The backend performs a PostgreSQL connectivity check during startup.
 The backend also handles `SIGINT` and `SIGTERM` shutdown signals by closing the HTTP server and PostgreSQL connection pool.
 
 Review application logs when investigating startup, database, or runtime problems.
+
+### Rollback Awareness
+
+- Keep a known-good application build or release available before deploying a new version.
+- If a deployment fails, follow the hosting platform's approved procedure to restore the previous known-good application release.
+- Back up the database before applying schema or data changes.
+- Do not assume that rolling back application code automatically reverses database changes.
+- Review database compatibility and restoration requirements before attempting a rollback.
+- No automated deployment rollback procedure has been implemented or verified as part of this training task.
 
 ## 11. Deployment Status
 

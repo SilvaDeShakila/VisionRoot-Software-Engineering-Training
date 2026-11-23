@@ -128,7 +128,7 @@ The health endpoint confirms API availability but does not independently query t
 
 **Commit:** Created successfully in commit `5a9ef2b` - Complete Day 09 security and deployment documentation.
 
-**Pull request:** Not created yet.
+**Pull request:** [#8 - Day 09: Security Review and Deployment Preparation](https://github.com/SilvaDeShakila/VisionRoot-Software-Engineering-Training/pull/8) - Open, targeting `main`; not merged.
 
 ## 8. Overall Progress
 

@@ -7,6 +7,7 @@
 ## 1. Environment File Protection
 
 - [x] Reviewed the root `.gitignore`.
+- [x] Reviewed the root `.env.example` and confirmed that application-specific configuration is maintained in the backend and frontend templates.
 - [x] Verified that `.env` and `.env.*` files are ignored.
 - [x] Verified that `.env.example` is explicitly allowed.
 - [x] Verified that `backend/.env` is ignored by Git.
