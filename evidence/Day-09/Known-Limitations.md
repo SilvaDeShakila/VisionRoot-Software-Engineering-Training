@@ -58,3 +58,10 @@
 The local production-like build and backend runtime checks passed.
 
 The outstanding items above must be reviewed and resolved according to supervisor instructions before treating the system as production-ready.
+
+## 8. HTTP Security Headers
+
+- The reviewed backend and frontend source configuration did not identify an explicit security-header or Content Security Policy configuration.
+- The required production security-header policy has not been confirmed or tested.
+
+**Next action:** Confirm the required HTTP security headers and Content Security Policy with the supervisor and deployment environment before production release. Test the resulting headers after configuration.

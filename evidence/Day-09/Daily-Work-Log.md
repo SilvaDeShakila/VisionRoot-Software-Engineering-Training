@@ -19,6 +19,8 @@
 
 ### Changed Files
 
+- `.env.example`
+- `frontend/package-lock.json`
 - `docs/deployment.md`
 - `evidence/Day-09/Security-Checklist.md`
 - `evidence/Day-09/Deployment-Verification.md`
@@ -51,6 +53,10 @@
 - Ran frontend ESLint.
 - Generated the Next.js production build successfully.
 - Verified the frontend API URL format without recording its full value.
+- Ran backend and frontend npm dependency security audits.
+- Updated vulnerable frontend development dependencies using `npm audit fix`.
+- Confirmed that backend and frontend audits reported zero vulnerabilities after the update.
+- Re-ran frontend ESLint and the Next.js production build successfully.
 
 ### Documentation
 
@@ -71,6 +77,9 @@ Created the following documents:
 | Backend build output | PASSED |
 | Frontend ESLint | PASSED |
 | Frontend production build | PASSED |
+| Backend dependency audit | PASSED - 0 vulnerabilities |
+| Frontend dependency audit | PASSED - 0 vulnerabilities |
+| Frontend production dependency audit | PASSED - 0 vulnerabilities |
 | Frontend TypeScript build check | PASSED |
 | PostgreSQL connection | PASSED |
 | `service_requests` table existence | PASSED |
@@ -126,7 +135,7 @@ The health endpoint confirms API availability but does not independently query t
 
 **Base commit:** `5e964f1` - Complete Day 08 backend testing and validation
 
-**Commit:** Created successfully in commit `5a9ef2b` - Complete Day 09 security and deployment documentation.
+**Commit history:** The Day 09 documentation was initially committed in `5a9ef2b`, followed by subsequent documentation updates. Refer to `git log --oneline` for the complete branch history.
 
 **Pull request:** [#8 - Day 09: Security Review and Deployment Preparation](https://github.com/SilvaDeShakila/VisionRoot-Software-Engineering-Training/pull/8) - Open, targeting `main`; not merged.
 

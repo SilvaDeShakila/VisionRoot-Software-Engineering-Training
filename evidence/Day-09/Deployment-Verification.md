@@ -155,3 +155,22 @@ The following checks were executed again after the Day 09 documentation updates.
 The malformed JSON API test produced an expected error log while verifying that malformed request bodies return HTTP 400. The test itself passed.
 
 These checks confirm the application builds and automated tests pass locally. They do not establish that a public production deployment, frontend production-server runtime, or complete security audit has been performed.
+
+## 10. Dependency Security Audit Revalidation
+
+The dependency audits were executed after the frontend dependency update.
+
+| Check | Result |
+|---|---|
+| Backend `npm audit` | PASSED - 0 vulnerabilities |
+| Frontend `npm audit` | PASSED - 0 vulnerabilities |
+| Frontend `npm audit --omit=dev` | PASSED - 0 vulnerabilities |
+| Frontend dependency tree | PASSED - updated dependency versions verified |
+| Frontend ESLint after update | PASSED |
+| Frontend production build after update | PASSED |
+| Frontend package configuration | `package.json` unchanged |
+| Frontend lockfile | Updated and reviewed |
+
+The frontend lockfile records the dependency resolution changes. No direct frontend dependency declaration was changed in `package.json`.
+
+These results describe the dependency audit and local build verification. They do not replace a complete security audit or public deployment verification.

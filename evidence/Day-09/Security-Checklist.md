@@ -81,3 +81,18 @@ A comprehensive historical secret scan therefore remains outstanding.
 The reviewed environment-file protections, configuration validation, local runtime checks, and deployment documentation were verified.
 
 This checklist does not represent a complete security audit. Historical secret scanning, authentication, authorization, and supervisor-dependent requirements remain outstanding.
+
+## 9. Dependency Security Audit
+
+- [x] Executed the backend dependency audit.
+- [x] Confirmed that the backend audit reported zero vulnerabilities.
+- [x] Executed the frontend dependency audit.
+- [x] Identified vulnerable frontend development dependencies.
+- [x] Updated the affected frontend dependency versions using `npm audit fix`.
+- [x] Confirmed that the frontend full dependency audit reported zero vulnerabilities.
+- [x] Confirmed that the frontend production dependency audit reported zero vulnerabilities.
+- [x] Re-ran frontend ESLint successfully.
+- [x] Re-ran the Next.js production build successfully.
+- [x] Reviewed the resulting `frontend/package-lock.json` changes.
+
+**Result:** Both backend and frontend dependency audits reported zero vulnerabilities after the frontend dependency update. This dependency audit does not constitute a complete application security audit.
