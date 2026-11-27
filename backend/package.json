@@ -9,7 +9,8 @@
     "build": "tsc",
     "start": "node dist/server.js",
     "typecheck": "tsc --noEmit",
-    "test": "tsx --test tests/request.service.test.ts tests/request.validator.test.ts tests/request.api.test.ts"
+    "test": "tsx --test tests/request.service.test.ts tests/request.validator.test.ts tests/request.api.test.ts",
+    "test:integration": "tsx --test tests/postgres-request.repository.integration.test.ts"
   },
   "dependencies": {
     "cors": "^2.8.6",

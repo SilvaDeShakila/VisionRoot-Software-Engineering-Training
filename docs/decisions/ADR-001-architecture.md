@@ -34,7 +34,7 @@ The system will contain:
 The backend will follow a layered structure:
 
 - Routes: Define API endpoints and connect them to controllers.
-- Controllers: Handle HTTP requests, validate or map incoming data and produce HTTP responses.
+- Controllers: Handle HTTP requests, process validated input, coordinate service operations and produce HTTP responses.
 - Services: Apply business rules and coordinate application operations.
 - Repositories: Handle database queries and persistence.
 - Database: Store service request records and enforce database constraints.

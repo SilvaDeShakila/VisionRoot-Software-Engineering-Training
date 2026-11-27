@@ -40,7 +40,7 @@ The API will use the following fields to represent a service request.
 | createdAt | string | Creation timestamp in ISO 8601 format |
 | updatedAt | string | Latest update timestamp in ISO 8601 format |
 
-The server/database will generate the identifier, initial status and timestamps when a request is created.
+The application generates the UUID identifier using randomUUID() and assigns the initial status (OPEN) in the service layer. PostgreSQL supplies the creation and update timestamps through database column defaults when the request is inserted.
 
 Clients must not directly control these server-managed fields.
 
@@ -79,6 +79,8 @@ Status: `201 Created`
   "updatedAt": "2026-11-16T10:30:00Z"
 }
 ```
+
+The backend trims the title and description before validation. The title must contain 1–150 characters and the description must contain 1–5000 characters after trimming.
 
 **Expected Status Codes:**
 
@@ -271,16 +273,16 @@ All API errors should follow a consistent JSON structure.
 
 The `details` field is optional and can provide additional information about validation failures.
 
-### 4.1 Proposed Error Codes
+### 4.1 Error Codes
 
 | Error Code | Meaning |
 |---|---|
 | VALIDATION_ERROR | One or more input fields are invalid |
-| INVALID_STATUS | Supplied status value is not supported |
+| INVALID_STATUS | Status query parameter supplied to GET /api/requests is not supported |
 | INVALID_STATUS_TRANSITION | Requested status transition is not allowed (proposed; not currently returned) |
 | REQUEST_NOT_FOUND | Requested service request does not exist |
 | INTERNAL_SERVER_ERROR | Unexpected server-side error |
-| SERVICE_UNAVAILABLE | A required service or dependency is unavailable |
+| SERVICE_UNAVAILABLE | A required service or dependency is unavailable (proposed; not currently returned) |
 | ROUTE_NOT_FOUND | The requested API endpoint does not exist |
 
 The backend must not expose database credentials, internal stack traces or other sensitive implementation details in error responses.
@@ -292,7 +294,8 @@ The backend must not expose database credentials, internal stack traces or other
 The backend must validate:
 
 - Required title and description fields.
-- Title and description length limits after confirmation.
+- Title must contain 1–150 characters after trimming.
+- Description must contain 1–5000 characters after trimming.
 - Supported category values.
 - Supported priority values.
 - Supported status values.
@@ -304,7 +307,8 @@ The backend must validate:
 | Layer | Responsibility |
 |---|---|
 | Routes | Define API paths and HTTP methods |
-| Controllers | Handle HTTP requests, validate/map input and return responses |
+| Validation Middleware | Validate request bodies and UUID route parameters before controllers execute |
+| Controllers | Handle HTTP requests, process validated input through services and return HTTP responses |
 | Services | Apply implemented business rules; enforce approved status transitions after supervisor confirmation |
 | Repositories | Perform database queries and persistence operations |
 | Database | Enforce schema constraints and maintain persistent records |
@@ -317,9 +321,8 @@ The following items remain pending confirmation and may affect future implementa
 2. Whether role-based authorization is required.
 3. The exact allowed status transition workflow.
 4. Whether additional request fields are required.
-5. Confirmation of title and description length limits.
-6. Whether pagination or sorting is required for the request list.
-7. The final health-check criteria.
+5. Whether pagination or sorting is required for the request list.
+6. The final health-check criteria.
 
 Implemented behavior is identified in Section 8. Proposed and pending functionality remains subject to supervisor review.
 
@@ -373,7 +376,6 @@ Database connection settings are managed through environment variables. Actual d
 | Authorization | Pending | Confirm whether role-based permissions are required |
 | Status transitions | Pending | Obtain the approved status transition workflow |
 | Additional request fields | Pending | Confirm whether additional fields are required |
-| Title and description limits | Pending | Confirm final validation limits |
 | Pagination and sorting | Pending | Confirm request-list requirements |
 | Health-check criteria | Pending | Confirm required dependency checks |
 

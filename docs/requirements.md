@@ -1,4 +1,4 @@
-﻿# Service Request Management System
+# Service Request Management System
 ## Day 01 - Requirements and SDLC
 
 ## 1. Problem Statement
@@ -48,7 +48,7 @@ Note: Authentication and authorization requirements must be confirmed with the s
 | FR-04 | View individual request details. | High |
 | FR-05 | Update request status. | High |
 | FR-06 | Validate request information on the server. | High |
-| FR-07 | Reject invalid status transitions. | High |
+| FR-07 | Reject invalid status transitions (business workflow pending supervisor confirmation). | High |
 | FR-08 | Persist request data in PostgreSQL. | High |
 | FR-09 | Provide a backend health endpoint. | High |
 
@@ -126,11 +126,13 @@ Acceptance Criteria:
 As a service staff member, I want to update a request status so that I can communicate its progress.
 
 Acceptance Criteria:
-- Authorized staff can update request statuses.
-- The system supports the agreed status workflow.
-- Invalid status transitions are rejected.
+- The application supports updating request statuses through the API.
+- The permitted status transitions must be confirmed by the supervisor before enforcement.
+- Invalid status transitions must be rejected once the business workflow is approved.
 - Valid changes are saved.
 - The updated status is returned in the response.
+
+Implementation note: Authentication and role-based authorization are not currently implemented. The requirement for authorized staff access remains subject to supervisor confirmation.
 
 ### US-06: Validate Request Information
 
@@ -161,8 +163,9 @@ As a developer or system operator, I want a health endpoint so that I can verify
 
 Acceptance Criteria:
 - The backend provides GET /api/health.
-- HTTP 200 is returned when documented health criteria pass.
+- HTTP 200 is returned when the backend health endpoint is available.
 - The response provides a clear health status.
+- The endpoint does not verify database connectivity; database connectivity is checked separately during backend startup.
 - Sensitive configuration is never exposed.
 
 ## 7. Product Backlog
@@ -200,7 +203,7 @@ The Minimum Viable Product will include:
 - Consistent API error handling.
 - Backend health endpoint.
 
-## 9. Future Improvements
+## 9.1 Future Improvements
 
 - User authentication.
 - Role-based access control.
@@ -211,7 +214,7 @@ The Minimum Viable Product will include:
 - File attachments.
 
 
-## 9.1 Request Status Workflow
+## 9.2 Request Status Workflow
 
 The system will use the following request statuses:
 

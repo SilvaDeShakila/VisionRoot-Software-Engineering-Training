@@ -1,346 +1,261 @@
 # Service Request Management System
 
-<p align="center">
-  <strong>A full-stack service request management application</strong><br />
-  Built with Next.js, TypeScript, Express.js, and PostgreSQL
-</p>
+## Project Overview
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Project-VisionRoot%20Training-2563EB?style=for-the-badge" alt="VisionRoot Training Project" />
-  <img src="https://img.shields.io/badge/Frontend-Next.js%2016-000000?style=for-the-badge&logo=next.js" alt="Next.js 16" />
-  <img src="https://img.shields.io/badge/Backend-Express.js-404D59?style=for-the-badge&logo=express" alt="Express.js" />
-  <img src="https://img.shields.io/badge/Database-PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL" />
-</p>
+The Service Request Management System is a full-stack web application designed to help organizations manage service requests efficiently.
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Automated%20Tests-36%20Passed-2E8B57?style=flat-square" alt="36 automated tests passed" />
-  <img src="https://img.shields.io/badge/TypeScript-Enabled-3178C6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript" />
-  <img src="https://img.shields.io/badge/Status-Under%20Development-orange?style=flat-square" alt="Under development" />
-</p>
+Users can submit service requests, track their progress, and manage request statuses through a centralized platform.
 
----
+## Project Objectives
 
-## Overview
-
-The **Service Request Management System** is a full-stack web application developed as part of the **VisionRoot Software Engineering Training programme**. It provides a centralized platform for submitting, tracking, and managing organizational service requests.
-
-The application combines a responsive Next.js frontend with a RESTful Express.js backend and PostgreSQL persistence. The current implementation focuses on the core request lifecycle, API integration, input validation, and reliable error handling.
-
-> **Project maturity:** This is an actively developed training project. The implemented features and verification results are documented below. Authentication, authorization, additional automated integration coverage, and production deployment remain outstanding.
-
-## Table of Contents
-
-- [Technology Stack](#technology-stack)
-- [Implemented Capabilities](#implemented-capabilities)
-- [Architecture](#architecture)
-- [API Reference](#api-reference)
-- [Getting Started](#getting-started)
-- [Verification and Test Results](#verification-and-test-results)
-- [Development Progress](#development-progress)
-- [Security and Known Limitations](#security-and-known-limitations)
-- [Project Documentation](#project-documentation)
-- [Repository Structure](#repository-structure)
+- Provide a centralized platform for service request management.
+- Allow users to submit and track service requests.
+- Enable authorized staff to manage and update requests.
+- Maintain reliable and structured request data.
+- Apply secure and maintainable software development practices.
 
 ## Technology Stack
 
-| Layer | Technologies |
-|---|---|
-| Frontend | Next.js 16, React, TypeScript, Tailwind CSS |
-| Backend | Node.js, Express.js, TypeScript |
-| Database | PostgreSQL |
-| Validation | Zod |
-| API style | REST |
-| Development tools | Git, npm, Visual Studio Code, PowerShell |
+- Frontend: Next.js 16, React, TypeScript and Tailwind CSS
+- Backend: Express.js and TypeScript
+- Database: PostgreSQL
 
-### Verified Development Environment
+## MVP Features
 
-| Tool | Version |
-|---|---:|
-| Node.js | 22.21.0 |
-| npm | 10.9.4 |
-| PostgreSQL | 18.7 |
+- Service request submission
+- View service requests
+- Filter requests by status
+- Request details management
+- Request status management
+- Input validation
+- Database integration
 
-## Implemented Capabilities
+## Development Environment
 
-### Frontend
+- Node.js v22.21.0
+- npm v10.9.4
+- Git v2.52.0.windows.1
+- Visual Studio Code
+- PowerShell
 
-- Dashboard with service-request summary cards.
-- Service request listing and status filtering.
-- Request creation form with required-field validation.
-- Request details view.
-- Status update interface.
-- Frontend-to-backend API integration for request creation and retrieval.
-- Loading, error, retry, and success feedback.
-- Desktop sidebar navigation and mobile slide-in navigation drawer.
-- Responsive layout styling.
+## Environment Configuration
 
-### Backend
+1. Refer to `.env.example` for the configuration structure.
+2. Create local environment files when required.
+3. Never commit actual credentials, passwords, API keys, or other secrets.
+4. Environment files are excluded through `.gitignore`, except `.env.example`.
 
-- REST API implemented with Express.js and TypeScript.
-- PostgreSQL-backed service request persistence.
-- Service request creation and retrieval.
-- Request filtering by status.
-- Request status update endpoint.
-- Zod-based request and environment validation.
-- Centralized error handling and not-found responses.
+## Frontend Setup
 
-## Architecture
-
-The application follows a separated frontend/backend architecture:
-
-```text
-┌──────────────────────────────┐
-│       Next.js Frontend       │
-│   React · TypeScript · UI    │
-└──────────────┬───────────────┘
-               │ HTTP / REST
-               ▼
-┌──────────────────────────────┐
-│       Express.js API         │
-│  Routes · Validation · Logic │
-└──────────────┬───────────────┘
-               │ SQL
-               ▼
-┌──────────────────────────────┐
-│         PostgreSQL           │
-│       Persistent Data        │
-└──────────────────────────────┘
-```
-
-The frontend communicates with the backend through HTTP requests. The backend validates incoming data, processes request operations, and interacts with PostgreSQL for persistent storage.
-
-## API Reference
-
-The following endpoints are currently implemented:
-
-| Method | Endpoint | Description |
-|---|---|---|
-| `GET` | `/` | API root response |
-| `GET` | `/api/health` | Basic API health check |
-| `POST` | `/api/requests` | Create a service request |
-| `GET` | `/api/requests` | Retrieve service requests |
-| `GET` | `/api/requests?status=OPEN` | Filter requests by status |
-| `GET` | `/api/requests/:id` | Retrieve a request by ID |
-| `PATCH` | `/api/requests/:id/status` | Update a request status |
-
-**Implementation note:** PostgreSQL connectivity is checked during backend startup. The `/api/health` endpoint reports API availability and does not independently query the database on every request. Business-level status-transition and authorization rules still require supervisor confirmation.
-
-## Getting Started
+The frontend application is located in the `frontend/` directory.
 
 ### Prerequisites
 
-Make sure the following tools are installed:
+- Node.js
+- npm
 
-- Node.js and npm
-- PostgreSQL
-- Git
+### Installation
 
-### 1. Clone the repository
+Run these commands from the project root:
 
-```bash
-git clone https://github.com/SilvaDeShakila/VisionRoot-Software-Engineering-Training.git
-cd VisionRoot-Software-Engineering-Training
-```
+    cd frontend
+    npm install
 
-### 2. Configure the database
+### Environment Configuration
 
-Create a PostgreSQL database for local development and apply the schema:
+The example frontend environment file is available at `frontend/.env.example`.
 
-```bash
-psql -U <your_postgres_user> -d <your_database_name> -f backend/database/schema.sql
-```
+Create the local frontend environment file from the example template:
 
-Replace the placeholders with your local PostgreSQL username and database name.
+    Copy-Item .env.example .env.local
 
-### 3. Configure and run the backend
+The API URL is configured in `frontend/.env.local` to connect the frontend to the backend API.
 
-Create `backend/.env` using `backend/.env.example` as a reference. Configure the following variables:
+### Run the Development Server
 
-| Variable | Purpose |
-|---|---|
-| `PORT` | Backend server port (default: 5000) |
-| `NODE_ENV` | Application environment |
-| `FRONTEND_URL` | Allowed frontend origin for CORS |
-| `DB_HOST` | PostgreSQL host |
-| `DB_PORT` | PostgreSQL port (default: 5432) |
-| `DB_NAME` | PostgreSQL database name |
-| `DB_USER` | PostgreSQL username |
-| `DB_PASSWORD` | PostgreSQL password |
+    npm run dev
 
-Then install dependencies and start the backend:
+Open `http://localhost:3000` in your browser.
 
-```bash
-cd backend
-npm install
-npm run dev
-```
+### Verification Commands
+
+    npm run test
+    npm run lint
+    npx tsc --noEmit
+    npm run build
+
+## Backend Setup
+
+The backend application is located in the `backend/` directory.
+
+### Prerequisites
+
+- Node.js
+- npm
+
+### Installation
+
+Run these commands from the project root:
+
+    cd backend
+    npm install
+
+### Environment Configuration
+
+Create the local backend environment file from the example template:
+
+    Copy-Item .env.example .env
+
+Configure the local database credentials in the resulting `backend/.env` file.
+
+The backend uses the following environment variables:
+
+- `PORT` - Backend server port (default: 5000).
+- `NODE_ENV` - Application environment.
+- `FRONTEND_URL` - Allowed frontend origin for CORS.
+- `DB_HOST` - PostgreSQL database host.
+- `DB_PORT` - PostgreSQL database port (default: 5432).
+- `DB_NAME` - PostgreSQL database name.
+- `DB_USER` - PostgreSQL database username.
+- `DB_PASSWORD` - PostgreSQL database password.
+
+Actual database credentials must remain in the local `backend/.env` file and must never be committed to Git.
+
+### Run the Development Server
+
+    npm run dev
 
 The backend API will be available at `http://localhost:5000`.
 
-### 4. Configure and run the frontend
+### Verification Commands
 
-Create `frontend/.env.local` using `frontend/.env.example` as a reference. Set the backend API URL:
+    npm test
+    npm run test:integration
+    npm run typecheck
+    npm run build
 
-```env
-NEXT_PUBLIC_API_URL=http://localhost:5000
-```
+### Currently Implemented API Endpoints
 
-Open a separate terminal, navigate to the frontend directory, and run:
-
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) in your browser.
-
-### 5. Run verification commands
-
-Backend commands (from `backend/`):
-
-```bash
-npm test
-npm run typecheck
-npm run build
-```
-
-Frontend commands (from `frontend/`):
-
-```bash
-npm run lint
-npx tsc --noEmit
-npm run build
-```
-
-## Verification and Test Results
-
-### Day 08 — Backend Automated Tests
-
-The latest recorded Day 08 test run completed successfully:
-
-<p align="center">
-  <img src="https://img.shields.io/badge/Tests-36%2F36%20Passed-2E8B57?style=for-the-badge" alt="36 of 36 tests passed" />
-  <img src="https://img.shields.io/badge/Failures-0-2E8B57?style=for-the-badge" alt="Zero test failures" />
-</p>
-
-| Test suite | Passed | Result |
-|---|---:|---|
-| Request service tests | 10 | ✔ Passed |
-| Request validation tests | 15 | ✔ Passed |
-| HTTP API tests | 11 | ✔ Passed |
-| **Total** | **36** | **✔ 36/36 passed** |
-
-The two additional API tests cover HTTP 404 responses for GET and PATCH requests using valid but non-existent request UUIDs. These tests were run with a separate PostgreSQL test database, `visionroot_test_db`.
-
-PostgreSQL-backed create, retrieve, filter, status-update, persistence, and cleanup workflows were also verified manually. **The 36 automated tests do not constitute a complete automated PostgreSQL integration suite.**
-
-Additional recorded checks:
-- ✔ Backend TypeScript type checking.
-- ✔ Backend production build.
-- ✔ Frontend linting.
-- ✔ Frontend TypeScript validation.
-- ✔ Frontend production build.
-- ✔ Backend development and compiled runtime startup checks.
-
-### Day 09 — Security Review and Deployment Preparation
-
-The Day 09 work included:
-- Reviewing environment-file protection and configuration validation.
-- Reviewing request validation, database configuration, CORS, and error handling.
-- Verifying local PostgreSQL connectivity.
-- Checking backend development and compiled runtime startup.
-- Running backend and frontend build checks.
-- Preparing deployment instructions and security evidence.
-
-**Deployment verification:** No public production deployment has been performed. The frontend production build passed, but its production server was not separately started during the Day 09 verification. These checks represent local production-like verification, not a live deployment or a complete security audit.
-
-## Development Progress
-
-| Phase | Scope | Status |
+| Method | Endpoint | Description |
 |---|---|---|
-| Day 01 | Requirements and MVP scope | ✔ Completed |
-| Day 02 | System architecture and technical design | ✔ Completed |
-| Day 03 | Development environment and repository preparation | ✔ Completed |
-| Day 04 | Initial frontend implementation | ✔ Completed |
-| Day 05 | Backend API foundation, validation, and error handling | ✔ Completed |
-| Day 06 | PostgreSQL database integration | ✔ Completed |
-| Day 07 | Frontend/backend integration and manual verification | ✔ Completed |
-| Day 08 | Automated backend tests and manual PostgreSQL API verification | ✔ Completed — PR pending |
-| Day 09 | Security review and deployment preparation | ✔ Completed — PR pending |
-| Final review | Remaining tests, supervisor-confirmed rules, and deployment decisions | ◷ Pending |
+| GET | `/api/health` | Basic API health check |
+| POST | `/api/requests` | Create a service request |
+| GET | `/api/requests` | Retrieve all service requests |
+| GET | `/api/requests?status=OPEN` | Filter requests by status |
+| GET | `/api/requests/:id` | Retrieve a request by ID |
+| PATCH | `/api/requests/:id/status` | Update a request status |
 
-The Day 08 and Day 09 implementation/evidence changes are maintained in separate pull requests targeting `main`. Their changes have not been merged.
+**Current backend status:** The backend uses PostgreSQL for persistent service request storage. Request creation, retrieval, status filtering and status updates are implemented. Request status updates are validated and manually verified. Business-level status transition rules remain subject to supervisor confirmation.
 
-## Security and Known Limitations
+## Current Frontend Implementation
 
-The following items remain open and should be addressed before production use:
+- Dashboard summary cards
+- Service request list
+- Status filtering
+- Create request form
+- Required-field validation
+- Backend API integration for request submission and retrieval
+- Request details page with status update functionality
+- Loading, error, retry and success feedback
+- Desktop sidebar navigation
+- Mobile slide-in navigation drawer
+- Responsive layout styling
 
-- **Authentication and authorization:** Authentication, role-based access, and authorization requirements have not yet been finalized with the supervisor.
-- **Business rules:** Permitted request status transitions and related authorization rules require supervisor confirmation.
-- **Automated integration testing:** A complete automated PostgreSQL integration test suite remains outstanding.
-- **End-to-end testing:** Browser-based end-to-end and complete frontend-to-backend workflow tests remain outstanding.
-- **Secret scanning:** Gitleaks was unavailable during the Day 09 review. A complete automated secret scan and historical Git content scan have not been completed.
-- **Production deployment:** No public production deployment has been performed.
+The frontend retrieves and creates service requests through the backend API and displays request details, status information and API error states. PostgreSQL persistence is provided through the backend.
 
-> **Readiness statement:** The application is under active development and is not yet considered production-ready.
+## Documentation
 
-## Project Documentation
+- `docs/requirements.md` - Project requirements
+- `docs/architecture.md` - System architecture
+- `docs/data-model.md` - Database model
+- `docs/api-contract.md` - API specifications
+- `docs/deployment.md` - Local setup and deployment guide
+- `docs/decisions/` - Architecture decision records
 
-| Resource | Description |
-|---|---|
-| `docs/requirements.md` | Project requirements and scope |
-| `docs/architecture.md` | System architecture |
-| `docs/data-model.md` | Database model |
-| `docs/api-contract.md` | API specifications |
-| `docs/decisions/` | Architecture decision records |
-| `docs/deployment.md` | Deployment preparation and instructions |
-| `evidence/Day-08/` | Automated test results, manual PostgreSQL verification, test output, and daily work log |
-| `evidence/Day-09/` | Security checklist, deployment verification, known limitations, and daily work log |
+## Evidence
+
+Daily development logs, reports and screenshots are maintained in the `evidence/` directory.
+
+## Repository Information
+
+- Repository: https://github.com/SilvaDeShakila/VisionRoot-Software-Engineering-Training
+- Default branch (remote HEAD): `main`
 
 ## Repository Structure
 
-```text
-VisionRoot-Software-Engineering-Training/
-├── backend/
-│   ├── database/
-│   │   └── schema.sql
-│   ├── src/
-│   ├── tests/
-│   ├── .env.example
-│   └── package.json
-├── docs/
-│   ├── decisions/
-│   ├── requirements.md
-│   ├── architecture.md
-│   ├── data-model.md
-│   ├── api-contract.md
-│   └── deployment.md
-├── evidence/
-│   ├── Day-01/ ... Day-07/
-│   ├── Day-08/
-│   └── Day-09/
-├── frontend/
-│   ├── src/
-│   ├── public/
-│   ├── .env.example
-│   └── package.json
-├── .env.example
-├── .gitignore
-└── README.md
-```
+    VisionRoot-Software-Engineering-Training/
+    |-- backend/
+    |   |-- database/
+    |   |-- src/
+    |   |-- tests/
+    |   |-- .env.example
+    |   |-- package.json
+    |-- frontend/
+    |   |-- public/
+    |   |-- src/
+    |   |-- .env.example
+    |   |-- package.json
+    |-- docs/
+    |   |-- decisions/
+    |   |-- requirements.md
+    |   |-- architecture.md
+    |   |-- data-model.md
+    |   |-- api-contract.md
+    |   |-- deployment.md
+    |-- evidence/
+    |   |-- Day-01/
+    |   |-- Day-02/
+    |   |-- Day-03/
+    |   |-- Day-04/
+    |   |-- Day-05/
+    |   |-- Day-06/
+    |   |-- Day-07/
+    |   |-- Day-08/
+    |   |-- Day-09/
+    |   |-- Day-10/
+    |-- .env.example
+    |-- .gitignore
+    |-- README.md
+## Development Progress
 
-## Next Steps
+- [x] Day 01: Project requirements and MVP scope documentation
+- [x] Day 02: System architecture and technical design
+- [x] Day 03: Development environment verification and repository preparation
+- [x] Day 04: Initial frontend UI implementation and verification
+- [x] Day 05: Initial backend API foundation, validation and error handling
+- [x] Day 06: PostgreSQL database integration
+- [x] Day 07: Frontend and backend integration with manual verification
+- [x] Day 08: Backend automated testing, PostgreSQL manual integration verification and evidence documentation
+- [x] Day 09: Security review, environment configuration, deployment verification and known-limitations documentation
+- [x] Day 10: Final backend/frontend verification, PostgreSQL API checks, browser-based functional verification, automated testing and local production-mode runtime verification
+- [ ] Final handover: Remaining supervisor confirmations, security scanning and production-readiness checks
 
-- [ ] Complete automated PostgreSQL integration testing.
-- [ ] Add browser-based end-to-end and complete workflow tests.
-- [ ] Confirm authentication, authorization, roles, and permitted status transitions with the supervisor.
-- [ ] Complete an approved automated secret scan, including historical repository content.
-- [ ] Confirm deployment requirements and obtain approval before any public production deployment.
+## Project Status
 
----
+The Day 01–10 development activities and core MVP implementation have been completed. The frontend and backend are integrated, with PostgreSQL providing persistent service request storage. Local production-mode runtime verification was also completed on 27 November 2026. The application has not been publicly deployed.
 
-<p align="center">
-  <sub>Developed as part of the VisionRoot Software Engineering Training programme.</sub><br />
-  <sub>Repository: <a href="https://github.com/SilvaDeShakila/VisionRoot-Software-Engineering-Training">VisionRoot Software Engineering Training</a></sub>
-</p>
+### Verification Completed
+
+- 34 backend automated tests passed: 10 service tests, 15 validation tests and 9 HTTP API tests.
+- Backend TypeScript type checking and production build completed successfully.
+- Frontend automated tests passed: 16/16 across two test files.
+- Frontend ESLint completed with 0 errors and 0 warnings.
+- Frontend TypeScript checks and Next.js production build completed successfully; static page generation passed 5/5.
+- PostgreSQL repository integration test passed: 1/1 using the dedicated `visionroot_test_db` database.
+- PostgreSQL-backed API workflows and browser-based frontend workflows were manually verified and documented.
+- Request creation, retrieval, status filtering and status updates were verified.
+
+### Known Verification Notes
+
+- The Vitest run displays a non-blocking Vite configuration warning concerning native config loading and CommonJS/ESM compatibility.
+
+### Outstanding Items
+
+- Browser end-to-end tests.
+- Full historical secret scanning.
+- Public production deployment and production-readiness approval.
+- Authentication and role-based access control.
+- Supervisor confirmation of business-level status transition rules.
+- Database migration framework and clean-environment deployment verification.
+- Regression test coverage linked to a confirmed and fixed defect.
+- Final supervisor review and project handover.
