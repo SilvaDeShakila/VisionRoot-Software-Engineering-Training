@@ -1,4 +1,4 @@
-import { Pool } from "pg";
+﻿import { Pool } from "pg";
 import { env } from "./env";
 
 export const pool = new Pool({
@@ -7,9 +7,10 @@ export const pool = new Pool({
   database: env.DB_NAME,
   user: env.DB_USER,
   password: env.DB_PASSWORD,
+  ssl: env.DB_SSL ? { rejectUnauthorized: true } : false,
   max: 10,
   idleTimeoutMillis: 30000,
-  connectionTimeoutMillis: 5000,
+  connectionTimeoutMillis: 25000,
 });
 
 pool.on("error", (error) => {
