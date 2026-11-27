@@ -219,3 +219,27 @@ The following checks were executed successfully:
 The final backend test output was saved to `evidence/Day-08/test-output.txt`.
 
 The original Day 08 implementation and work date remain 20 November 2026. This section records subsequent verification only.
+
+## 9. Additional API Not-Found Coverage - 23 November 2026
+
+Additional API integration coverage was implemented and verified using a separate PostgreSQL database named `visionroot_test_db`.
+
+Work completed:
+
+- Created the isolated PostgreSQL test database.
+- Applied the project database schema to the test database.
+- Added a GET API test for a valid but non-existent request UUID.
+- Added a PATCH API test for a valid but non-existent request UUID.
+- Verified both endpoints return HTTP 404 with the expected `REQUEST_NOT_FOUND` error response.
+- Executed the complete backend test suite using the isolated test database.
+- Updated `evidence/Day-08/test-output.txt` with the latest test output.
+
+Latest verification:
+
+- API tests: 11 passed.
+- Service tests: 10 passed.
+- Validation tests: 15 passed.
+- Total: 36 passed, 0 failed.
+- Exit code: 0.
+
+The `DB_NAME` environment variable was restored after the test run. The additional tests improve database-backed API not-found coverage, while a complete automated database integration test suite remains outside the verified scope.

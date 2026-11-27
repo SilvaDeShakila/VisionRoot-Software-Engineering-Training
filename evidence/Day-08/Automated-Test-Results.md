@@ -158,3 +158,26 @@ The following checks were executed again on 23 November 2026:
 All checks listed above completed successfully during the final verification session.
 
 The original Day 08 work date and test execution evidence remain unchanged.
+
+## 11. Additional API Not-Found Coverage - 23 November 2026
+
+A separate PostgreSQL test database named `visionroot_test_db` was created for additional API not-found verification. The existing database schema was applied to this test database.
+
+Two additional API integration tests were added:
+
+1. GET a valid but non-existent request UUID and verify HTTP 404 with error code `REQUEST_NOT_FOUND`.
+2. PATCH a valid but non-existent request UUID and verify HTTP 404 with error code `REQUEST_NOT_FOUND`.
+
+The backend test suite was executed with `DB_NAME` temporarily set to `visionroot_test_db`.
+
+Latest test results:
+
+- API tests: 11 passed
+- Service tests: 10 passed
+- Validation tests: 15 passed
+- Total: 36 passed, 0 failed
+- Test command exit code: 0
+
+The latest TAP output is saved in `evidence/Day-08/test-output.txt`.
+
+The original 34-test result is retained as historical evidence. These additional tests verify database-backed not-found API responses; they do not represent a complete automated database integration test suite. Existing successful database-backed API workflow verification remains documented separately.
