@@ -19,6 +19,11 @@ const envSchema = z.object({
   DB_USER: z.string().min(1).default("postgres"),
 
   DB_PASSWORD: z.string().min(1),
+
+  DB_SSL: z
+    .enum(["true", "false"])
+    .default("false")
+    .transform((value) => value === "true"),
 });
 
 const parsedEnv = envSchema.safeParse(process.env);
