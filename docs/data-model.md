@@ -54,16 +54,16 @@ The application will generate the UUID when creating a new service request.
 - Required field.
 - Leading and trailing whitespace must be removed.
 - Whitespace-only values must be rejected.
-- Proposed minimum length: 3 characters.
-- Proposed maximum length: 150 characters.
+- Minimum length: 1 character after trimming whitespace.
+- Maximum length: 150 characters.
 
 ### 5.2 Description
 
 - Required field.
 - Leading and trailing whitespace must be removed.
 - Whitespace-only values must be rejected.
-- Proposed minimum length: 10 characters.
-- Proposed maximum length: 5,000 characters.
+- Minimum length: 1 character after trimming whitespace.
+- Maximum length: 5,000 characters.
 
 ### 5.3 Category
 
@@ -104,44 +104,47 @@ The supported status values are:
 
 New service requests must initially receive the OPEN status.
 
-Status updates must follow the workflow agreed with the supervisor. Invalid status transitions must be rejected by the backend.
+The backend validates status updates against the supported status values. However, business-level status transition rules are not currently enforced.
 
-The exact transition rules remain pending confirmation.
+The permitted status transition workflow remains pending confirmation from the supervisor.
 
 Database CHECK constraint:
 
 `CHECK (status IN ('OPEN', 'IN_PROGRESS', 'RESOLVED', 'CLOSED'))`
 
-### 5.6 Proposed Database Length Constraints
+### 5.6 Backend Validation and Database Length Constraints
 
-The following length limits are proposed validation rules:
+The backend currently enforces the following validation limits:
 
-- Title: 3 to 150 characters.
-- Description: 10 to 5,000 characters.
+- Title: 1 to 150 characters after trimming whitespace.
+- Description: 1 to 5,000 characters after trimming whitespace.
 
 **Current database implementation:**
 
 - The `title` column uses `VARCHAR(150)`, enforcing a maximum length of 150 characters.
 - The `description` column uses `TEXT` without a database CHECK constraint for minimum or maximum length.
-- The proposed minimum title length and description length limits are not currently enforced by database constraints.
+- The minimum title and description lengths are enforced by backend validation, not by database constraints.
 
-These limits should be reviewed and implemented consistently through backend validation and database constraints where appropriate.
+Any additional database-level length constraints should be considered separately if required by the confirmed project requirements.
+
 ## 6. Timestamp Management
 
 ### created_at
 
 - Records when the service request was created.
-- Must be managed by the server or database.
+- For PostgreSQL persistence, the database sets this value using `DEFAULT CURRENT_TIMESTAMP`.
+- The in-memory repository retains the timestamp supplied by the service layer.
 - Must not be supplied or controlled by the client.
 
 ### updated_at
 
 - Records the latest update time.
-- The PostgreSQL repository update operation sets it using `CURRENT_TIMESTAMP`.
-- The API endpoint for updating service requests remains pending.
+- The service layer generates an ISO timestamp when a request is updated.
+- For PostgreSQL persistence, the repository update operation sets this value using `CURRENT_TIMESTAMP`, overriding the service-generated value.
+- The in-memory repository retains the timestamp supplied by the service layer.
 - The client must not directly control this value.
 
-Both fields will use the PostgreSQL TIMESTAMPTZ type to retain timezone-aware timestamps.
+Both fields use the PostgreSQL `TIMESTAMPTZ` type to retain timezone-aware timestamps.
 
 ## 7. Entity Relationship Diagram
 
@@ -176,7 +179,7 @@ The database and backend must work together to protect data integrity.
 - Status must contain a supported value.
 - New requests must start with OPEN status.
 - Creation and update timestamps must be maintained.
-- Invalid status transitions must be rejected by backend business logic.
+- Business-level status transition validation is a pending requirement and is not currently implemented.
 
 ## 9. Design Decisions
 
