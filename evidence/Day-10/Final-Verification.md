@@ -19,6 +19,7 @@
 | Verification | Result |
 |---|---|
 | Backend automated tests | 34/34 passed |
+| PostgreSQL repository integration test | 1/1 passed |
 | TypeScript typecheck | Passed |
 | Production build | Passed |
 | Compiled dist/server.js | Verified |
@@ -30,15 +31,16 @@
 
 | Verification | Result |
 |---|---|
-| ESLint | Passed |
+| ESLint | Passed - 0 errors, 0 warnings |
 | Next.js production build | Passed |
 | TypeScript build checks | Passed |
+| Frontend automated tests | 16/16 passed |
 | Static page generation | 5/5 passed |
 | Frontend development server | Started successfully |
 | Dashboard data loading | Passed |
 | Request details page | Passed |
 
-No dedicated frontend automated test script was available in the package scripts. Frontend functional verification was therefore performed manually in the browser.
+Frontend automated tests were added during follow-up work on 26 November 2026. The complete suite was re-run on 27 November 2026 and all 16 tests across two test files passed. Manual browser-based functional verification is documented separately.
 
 ## 4. PostgreSQL-Backed API Verification
 
@@ -135,9 +137,12 @@ Verified:
 
 | Area | Result |
 |---|---|
-| Backend automated tests | Passed |
+| Backend automated tests | Passed - 34/34 |
+| PostgreSQL repository integration test | Passed - 1/1 |
 | Backend typecheck and build | Passed |
-| Frontend lint and build | Passed |
+| Frontend ESLint | Passed - 0 errors, 0 warnings |
+| Frontend TypeScript checks and production build | Passed |
+| Frontend automated tests | 16/16 passed |
 | PostgreSQL connectivity | Passed |
 | API operations | Passed |
 | Dashboard | Passed |
@@ -160,7 +165,7 @@ Verified:
 
 - Verification was performed in a local development environment.
 - No public production deployment was performed.
-- Frontend automated tests were not available.
+- Frontend automated tests were added on 26 November 2026 and re-run on 27 November 2026; all 16 tests passed.
 - Authentication and authorization were not confirmed.
 - Business-specific status transition restrictions were not confirmed.
 - Automated and historical Git secret scanning was not completed.

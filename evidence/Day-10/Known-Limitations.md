@@ -15,11 +15,13 @@ Role-based access restrictions should not be considered verified.
 
 The application supports updating request statuses. Specific business rules restricting which status transitions are permitted were not confirmed.
 
-## 3. Automated Frontend Testing
+## 3. Frontend Automated Testing
 
-No dedicated frontend automated test script was available in the frontend package scripts.
+Frontend automated tests are now available using Vitest and React Testing Library.
 
-Frontend workflows were tested manually in the browser.
+Frontend automated tests were added during follow-up work on 26 November 2026. The complete test suite was re-run on 27 November 2026. It contains 16 tests across two test files, and all 16 tests passed.
+
+The Vitest run still displays a Vite configuration warning concerning the native config loader and CommonJS/ESM configuration compatibility. This warning did not cause test failures.
 
 ## 4. Production Deployment
 

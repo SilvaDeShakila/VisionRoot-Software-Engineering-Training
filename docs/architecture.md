@@ -270,8 +270,8 @@ This approach is suitable for the current training MVP because independently dep
 | Authentication | No verified completed authentication feature is established by this review. | Confirm scope with the supervisor. |
 | Authorization | Role-based permissions remain unconfirmed. | Confirm roles and server-side access rules. |
 | Status workflow | Business-level transition rules are not confirmed or enforced. | Obtain the approved workflow before implementation. |
-| Automated database testing | Current automated backend tests do not establish full PostgreSQL integration coverage. | Add tests using a dedicated test database. |
-| Frontend automated testing | No frontend automated test suite was identified in the reviewed package scripts. | Evaluate suitable component and browser-level tests. |
+| Automated database testing | A PostgreSQL repository integration test has been implemented and passed (1/1) using a dedicated test database. | Expand integration coverage where required and retain isolated test-database safeguards. |
+| Frontend automated testing | 16 automated frontend tests across two test files passed. Browser-level end-to-end coverage has not yet been established. | Add browser-level end-to-end tests for critical user workflows. |
 | Secret scanning | A complete automated and historical Git secret scan has not been completed. | Perform an approved secret scan. |
 | Health monitoring | The health endpoint does not independently check database readiness. | Confirm deployment monitoring requirements. |
 | Database migrations | A migration framework was not identified. | Confirm schema change and migration procedures. |
@@ -285,4 +285,4 @@ The frontend communicates with the backend through REST APIs. The backend separa
 
 The modular monolith approach provides a practical structure for the training MVP while keeping the implementation understandable and testable.
 
-The application has passed the documented local backend and frontend verification checks. These results do not establish production approval. Authentication, authorization, approved status-transition rules, additional automated integration coverage, security scanning and deployment review remain outstanding.
+The application has passed the documented local backend and frontend verification checks, including 34/34 backend automated tests, 1/1 PostgreSQL repository integration test using a dedicated test database, and 16/16 frontend automated tests. These results do not establish production approval or complete browser-level end-to-end coverage. Authentication, authorization, approved status-transition rules, browser-level end-to-end testing, security scanning and deployment review remain outstanding.

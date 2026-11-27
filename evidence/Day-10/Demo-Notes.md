@@ -80,8 +80,11 @@ Show the success message and the newly created request in the dashboard.
 Briefly explain the completed technical checks:
 
 - Backend automated tests: 34/34 passed.
+- PostgreSQL integration test: 1/1 passed.
 - Backend typecheck and production build passed.
-- Frontend lint and production build passed.
+- Frontend ESLint passed with 0 errors and 0 warnings.
+- Frontend TypeScript checks and production build passed.
+- Frontend automated tests: 16/16 passed.
 - PostgreSQL connection verified.
 - API create, retrieve, filter, and update operations verified.
 - Browser-based request workflows verified.
@@ -92,7 +95,7 @@ Mention the current project limitations honestly:
 
 - No public production deployment.
 - Authentication and authorization are not confirmed.
-- Frontend automated tests are not available.
+- Frontend automated tests are available using Vitest and React Testing Library; all 16 tests passed.
 - Additional security verification remains.
 
 Conclude by summarizing the completed request management workflows and the successful local verification.
