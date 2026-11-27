@@ -1,7 +1,7 @@
 # Day 10 – Known Limitations
 
 **Project:** VisionRoot Service Request Management System
-**Review Date:** 25 November 2026
+**Review Date:** 27 November 2026
 
 The following limitations and outstanding verification areas were identified during the final review.
 
@@ -51,7 +51,15 @@ Security headers and Content Security Policy configuration were not explicitly c
 
 ## 9. Frontend Production Runtime
 
-The frontend production build completed successfully. A separate frontend production-server runtime verification was not performed.
+A separate local production-mode frontend runtime verification was completed on 27 November 2026.
+
+- The Next.js production server started successfully at `http://localhost:3001`.
+- The dashboard returned HTTP 200 and displayed 7 PostgreSQL-backed requests.
+- The request details page loaded successfully.
+- The production frontend bundle referenced the production-mode local API at `http://localhost:5001`.
+- The backend CORS preflight check accepted the frontend origin.
+
+This verification was performed locally. It does not represent a public production deployment.
 
 ## 10. Overall Assessment
 

@@ -1,7 +1,7 @@
 # Day 10 – Final Verification Report
 
 **Project:** VisionRoot Service Request Management System
-**Date:** 25 November 2026
+**Date:** 27 November 2026
 **Branch:** day-10-final-demo
 **Verification Type:** Automated and Manual Verification
 
@@ -133,7 +133,40 @@ Verified:
 
 **Result:** Passed.
 
-## 6. Final Verification Summary
+## 6. Production-Mode Local Runtime Verification – 27 November 2026
+
+A separate local production-mode runtime check was performed using the compiled backend and Next.js production build.
+
+### Backend
+
+- Backend started using the compiled `dist/server.js` through `npm start`.
+- Production-mode backend ran at `http://localhost:5001`.
+- PostgreSQL connection was successful during startup.
+- API root endpoint returned HTTP 200.
+- API health endpoint returned HTTP 200.
+- Request-list endpoint returned HTTP 200 and 7 PostgreSQL-backed records.
+
+### Frontend
+
+- Next.js production build completed successfully.
+- Production frontend server started at `http://localhost:3001`.
+- Dashboard returned HTTP 200.
+- Production frontend JavaScript bundles referenced `http://localhost:5001` as the API base URL.
+- Dashboard displayed 7 requests: 5 Open, 1 In Progress and 1 Resolved.
+- Request details page for `f4441abe-2432-4c3d-bf08-b30d4ba12e9c` loaded and displayed its title, description, category, priority, status and timestamps.
+- Status update control was visible. No status change was made during this production details-page check.
+
+### Production CORS and API Data
+
+- CORS preflight from `http://localhost:3001` to the production-mode API returned HTTP 204.
+- `Access-Control-Allow-Origin` returned `http://localhost:3001`.
+- Production-mode request-list endpoint returned 7 records.
+
+**Result:** Local production-mode frontend/backend connectivity, CORS configuration, PostgreSQL-backed API retrieval, dashboard rendering and request details rendering passed.
+
+This was a local production-mode verification, not a public deployment.
+
+## 7. Final Verification Summary
 
 | Area | Result |
 |---|---|
@@ -151,17 +184,19 @@ Verified:
 | Status update | Passed |
 | Request creation | Passed |
 
-## 7. Verification Environment
+## 8. Verification Environment
 
 - Operating System: Windows 11
 - Backend: Node.js / Express
 - Frontend: Next.js
 - Database: PostgreSQL 18
-- Browser-based testing: Local development environment
-- Backend URL: http://localhost:5000
-- Frontend URL: http://localhost:3000
+- Browser-based testing: Local development and local production-mode environments
+- Development backend URL: http://localhost:5000
+- Development frontend URL: http://localhost:3000
+- Local production-mode backend URL: http://localhost:5001
+- Local production-mode frontend URL: http://localhost:3001
 
-## 8. Verification Scope and Limitations
+## 9. Verification Scope and Limitations
 
 - Verification was performed in a local development environment.
 - No public production deployment was performed.
@@ -169,12 +204,12 @@ Verified:
 - Authentication and authorization were not confirmed.
 - Business-specific status transition restrictions were not confirmed.
 - Automated and historical Git secret scanning was not completed.
-- No separate frontend production-server runtime test was performed.
+- A separate local production-mode frontend-server runtime test was performed on 27 November 2026. This was not a public production deployment.
 - Browser screenshots were not included in this report.
 
-## 9. Conclusion
+## 10. Conclusion
 
-The Day 10 final verification confirmed that the backend, frontend, and PostgreSQL integration operate successfully within the tested local environment.
+The Day 10 final verification confirmed that the backend, frontend, and PostgreSQL integration operate successfully within the tested local environment. On 27 November 2026, a separate local production-mode runtime check also verified the compiled backend, production frontend server, CORS configuration, PostgreSQL-backed request retrieval, dashboard and request details page.
 
 The main service request workflows, including request creation, retrieval, filtering, viewing details, and status updates, were successfully verified.
 

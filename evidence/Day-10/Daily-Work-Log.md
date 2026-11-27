@@ -139,7 +139,7 @@ A database migration framework has not been identified. A repeatable clean-envir
 
 ### Deployment
 
-No public production deployment was performed. The frontend production build passed, but a separate frontend production-server runtime test remains outstanding.
+No public production deployment was performed. A separate local production-mode frontend and backend runtime verification was completed on 27 November 2026.
 
 ### Health Monitoring
 
@@ -152,7 +152,7 @@ The health endpoint verifies API availability but does not independently perform
 - Confirm the expected business rules for status transitions.
 - Perform an approved automated secret scan.
 - Review database migration and clean-environment setup requirements.
-- Perform frontend production runtime verification if required.
+- Consider public deployment only after the documented security, authorization and operational limitations are reviewed.
 - Complete the final demonstration and handover.
 - Ensure the final reviewed commit is recorded.
 
@@ -186,4 +186,18 @@ Following the original Day 10 activities, additional frontend automated testing 
 - Confirmed static page generation completed successfully (5/5).
 - Updated the automated test results report with the verified backend test breakdown and consolidated results.
 
-Detailed results are documented in `evidence/Day-10/Automated-Test-Results.md`.
+Detailed automated test results are documented in `evidence/Day-10/Automated-Test-Results.md`.
+
+### Local Production-Mode Runtime Verification
+
+- Started the compiled backend using `npm start` on port 5001.
+- Confirmed successful PostgreSQL connection at backend startup.
+- Verified backend root and health endpoints returned HTTP 200.
+- Verified the request-list endpoint returned 7 PostgreSQL-backed records.
+- Built and started the Next.js production frontend on port 3001.
+- Verified the production dashboard displayed 7 requests: 5 Open, 1 In Progress and 1 Resolved.
+- Opened the request details page and confirmed its displayed information.
+- Verified the frontend production bundle used the API base URL on port 5001.
+- Verified the CORS preflight accepted the frontend origin with HTTP 204.
+
+This was a local production-mode check, not a public deployment.
